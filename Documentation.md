@@ -1,0 +1,414 @@
+# Protocol Documentation
+<a name="top"></a>
+
+## Table of Contents
+
+- [Skyle.proto](#Skyle.proto)
+    - [Button](#Skyle.Button)
+    - [ButtonActions](#Skyle.ButtonActions)
+    - [CalibControl](#Skyle.CalibControl)
+    - [CalibImprove](#Skyle.CalibImprove)
+    - [CalibMessages](#Skyle.CalibMessages)
+    - [CalibPoint](#Skyle.CalibPoint)
+    - [CalibQuality](#Skyle.CalibQuality)
+    - [DeviceVersions](#Skyle.DeviceVersions)
+    - [FilterOptions](#Skyle.FilterOptions)
+    - [OptionMessage](#Skyle.OptionMessage)
+    - [Options](#Skyle.Options)
+    - [Point](#Skyle.Point)
+    - [PositioningMessage](#Skyle.PositioningMessage)
+    - [Profile](#Skyle.Profile)
+    - [ScreenResolution](#Skyle.ScreenResolution)
+    - [StatusMessage](#Skyle.StatusMessage)
+    - [calibControlMessages](#Skyle.calibControlMessages)
+  
+    - [Profile.Skill](#Skyle.Profile.Skill)
+  
+    - [Skyle](#Skyle.Skyle)
+  
+- [Scalar Value Types](#scalar-value-types)
+
+
+
+<a name="Skyle.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## Skyle.proto
+
+Full protocol that is used to interface with the Skyle eye tracker with gRPC
+
+(c) 2020 eyeV GmbH, written by Mathias Anhalt
+
+https://eyev.de/
+
+
+<a name="Skyle.Button"></a>
+
+### Button
+
+Button message
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| isPresent | [bool](#bool) |  | Indicates if a button is connected to the eye tracker |
+| buttonActions | [ButtonActions](#Skyle.ButtonActions) |  | Configured button actions |
+| availableActions | [string](#string) | repeated | List with available actions, currently: &#34;none&#34;, &#34;unknown&#34;, &#34;leftClick&#34;, &#34;rightClick&#34;, &#34;scroll&#34;, &#34;calibrate&#34; |
+
+
+
+
+
+
+<a name="Skyle.ButtonActions"></a>
+
+### ButtonActions
+
+Representing the three available button actions
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| singleClick | [string](#string) |  | Action to trigger, when a single click on the button is performed |
+| doubleClick | [string](#string) |  | Action to trigger, when a double click on the button is performed |
+| holdClick | [string](#string) |  | Action to trigger when the button is constantly pushed |
+
+
+
+
+
+
+<a name="Skyle.CalibControl"></a>
+
+### CalibControl
+
+Message describing the calibration status
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| calibrate | [bool](#bool) |  | Indicates a running calibration or requests a calibration |
+| numberOfPoints | [int32](#int32) |  | Number of calibration points, currently 5 and 9 is accepted |
+| abort | [bool](#bool) |  | Indicates an aborted calibration or request an abort |
+| stopHID | [bool](#bool) |  | If connected to an iPad or tablet, this will indicate if the native cursor should move or not |
+| res | [ScreenResolution](#Skyle.ScreenResolution) |  | Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used) |
+
+
+
+
+
+
+<a name="Skyle.CalibImprove"></a>
+
+### CalibImprove
+
+Message to improve a calibration
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| rating | [int32](#int32) |  | Improve points that are worse than this rating (1-5) |
+| stopHID | [bool](#bool) |  | If connected to an iPad or tablet, this will indicate if the native cursor should move or not |
+
+
+
+
+
+
+<a name="Skyle.CalibMessages"></a>
+
+### CalibMessages
+
+Message wrapping calibration host messages
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| calibControl | [CalibControl](#Skyle.CalibControl) |  | Message describing the calibration status, gets sent on change |
+| calibPoint | [CalibPoint](#Skyle.CalibPoint) |  | Calibration point that gets sent on change |
+| calibQuality | [CalibQuality](#Skyle.CalibQuality) |  | Calibration quality, gets sent when calibration is done |
+
+
+
+
+
+
+<a name="Skyle.CalibPoint"></a>
+
+### CalibPoint
+
+Message describing a calibration point
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| count | [int32](#int32) |  | Number of calibration point: 0 to 8 for 9 point calibration, 0 to 4 for 5 point calibration |
+| currentPoint | [Point](#Skyle.Point) |  | 2D point with coordinates |
+
+
+
+
+
+
+<a name="Skyle.CalibQuality"></a>
+
+### CalibQuality
+
+Message describing the quality of a calibration
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| quality | [double](#double) |  | Overall quality: 1 is worst, 5 is best |
+| qualitys | [double](#double) | repeated | List of quality per calibration point: 1 is worst, 5 is best |
+
+
+
+
+
+
+<a name="Skyle.DeviceVersions"></a>
+
+### DeviceVersions
+
+Message containing all build versions
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| firmware | [string](#string) |  | Version of the firmware |
+| eyetracker | [string](#string) |  | Version of the eye tracking software |
+| calib | [string](#string) |  | Version of the calibration software |
+| base | [string](#string) |  | Version of the base system |
+| serial | [uint64](#uint64) |  | Unique serial of this device |
+| skyleType | [int32](#int32) |  | Product type: 4 means iPad version, 1 means developer or windows version |
+| isDemo | [bool](#bool) |  | Indicator if this is a demo device |
+
+
+
+
+
+
+<a name="Skyle.FilterOptions"></a>
+
+### FilterOptions
+
+Filter configuration message
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| fixationFilter | [int32](#int32) |  | Filter for fixations. range is 3 to 33 (3 high speed, less filtering and 33 low speed, hard filtering) |
+| gazeFilter | [int32](#int32) |  | Filter for gaze. range is 3 to 33 (3 high speed, less filtering and 33 low speed, hard filtering) |
+
+
+
+
+
+
+<a name="Skyle.OptionMessage"></a>
+
+### OptionMessage
+
+Message to wrap the options message: either empty or filled with options
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| empty | [google.protobuf.Empty](#google.protobuf.Empty) |  | Empty message |
+| options | [Options](#Skyle.Options) |  | Options |
+
+
+
+
+
+
+<a name="Skyle.Options"></a>
+
+### Options
+
+Option message for configuration
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| stream | [bool](#bool) |  | Turn on an image stream @ http://skyle.local:8080 |
+| enablePause | [bool](#bool) |  | Allow pause by API or by looking into the camera for 5 seconds |
+| pause | [bool](#bool) |  | Pause the eye tracker - enablePause needs to be true |
+| guidance | [bool](#bool) |  | Deprecated: stream a positioning stream instead of an image stream (DO NOT USE) |
+| enableStandby | [bool](#bool) |  | Enable standby mode if the host (iPad) is not reachable / turned off |
+| disableMouse | [bool](#bool) |  | Disable mouse on windows or testing systems |
+| filter | [FilterOptions](#Skyle.FilterOptions) |  | Filter options for high skilled users, leave empty if skill is not high! |
+
+
+
+
+
+
+<a name="Skyle.Point"></a>
+
+### Point
+
+Message for a 2D point
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| x | [double](#double) |  | Precise X value |
+| y | [double](#double) |  | Precise Y value |
+
+
+
+
+
+
+<a name="Skyle.PositioningMessage"></a>
+
+### PositioningMessage
+
+Message with eye positions and quality indicators
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| leftEye | [Point](#Skyle.Point) |  | 2D position of the left eye |
+| rightEye | [Point](#Skyle.Point) |  | 2D position of the right eye |
+| qualityDepth | [int32](#int32) |  | Quality indicator for depth positioning. range is -50 to &#43;50. 0 is the best, -50 to far away and 50 to close |
+| qualitySides | [int32](#int32) |  | Quality indicator for side positioning. range is -50 to &#43;50. 0 is the best, -50 to far left and 50 to far right |
+
+
+
+
+
+
+<a name="Skyle.Profile"></a>
+
+### Profile
+
+Message describing a user profile
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [int32](#int32) |  | Unique ID for a user (on this eye tracker) |
+| name | [string](#string) |  | Name or nickname for the profile |
+| skill | [Profile.Skill](#Skyle.Profile.Skill) |  | Skill of user |
+
+
+
+
+
+
+<a name="Skyle.ScreenResolution"></a>
+
+### ScreenResolution
+
+Message with screen resolution of the client
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| width | [int32](#int32) |  | Width in pixel |
+| height | [int32](#int32) |  | Height in pixel |
+
+
+
+
+
+
+<a name="Skyle.StatusMessage"></a>
+
+### StatusMessage
+
+General status message
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| success | [bool](#bool) |  | True on success, false on failure |
+
+
+
+
+
+
+<a name="Skyle.calibControlMessages"></a>
+
+### calibControlMessages
+
+Message wrapping possible calibration control messages for a client
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| calibControl | [CalibControl](#Skyle.CalibControl) |  | Message describing the calibration status |
+| calibImprove | [CalibImprove](#Skyle.CalibImprove) |  | Message to improve a calibration |
+
+
+
+
+
+ 
+
+
+<a name="Skyle.Profile.Skill"></a>
+
+### Profile.Skill
+
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| Low | 0 | User is unpractised and has maybe cognitive impairment. this will cause the eye tracker to filter gaze data harder (less precision) |
+| Medium | 1 | User that understands the operation. Default filtering will take place |
+| High | 2 | User that is experienced with eye tracking and wants to control the filtering himself |
+
+
+ 
+
+ 
+
+
+<a name="Skyle.Skyle"></a>
+
+### Skyle
+
+Skyle service to use the eye tracker
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| Calibrate | [calibControlMessages](#Skyle.calibControlMessages) stream | [CalibMessages](#Skyle.CalibMessages) stream | Used to calibrate for the current user. Streams in both directions with given message types. Client needs to close the stream when done |
+| Positioning | [.google.protobuf.Empty](#google.protobuf.Empty) | [PositioningMessage](#Skyle.PositioningMessage) stream | Subscribe a stream sending eye positions and quality indicators to achieve good positioning of a user. Client needs to close the stream when done |
+| Gaze | [.google.protobuf.Empty](#google.protobuf.Empty) | [Point](#Skyle.Point) stream | Subscribe a gaze stream, that sends coordinates of the current user gaze on a screen. Client needs to close the stream when done |
+| GetButton | [.google.protobuf.Empty](#google.protobuf.Empty) | [Button](#Skyle.Button) | Unary call to get the button status |
+| SetButton | [ButtonActions](#Skyle.ButtonActions) | [ButtonActions](#Skyle.ButtonActions) | Unary call to configure the button actions, answers with the resulting configuration |
+| Configure | [OptionMessage](#Skyle.OptionMessage) | [Options](#Skyle.Options) | Unary call to get (OptionMessage -&gt; empty) or set options (OptionMessage -&gt; Options). Answers with the resulting options. Options are saved to the current user profile |
+| GetVersions | [.google.protobuf.Empty](#google.protobuf.Empty) | [DeviceVersions](#Skyle.DeviceVersions) | Unary call to get software versions |
+| GetProfiles | [.google.protobuf.Empty](#google.protobuf.Empty) | [Profile](#Skyle.Profile) stream | Subscribe a profile stream of all available profiles. Host ends stream when all results are sent |
+| CurrentProfile | [.google.protobuf.Empty](#google.protobuf.Empty) | [Profile](#Skyle.Profile) | Unary call to get the current profile |
+| SetProfile | [Profile](#Skyle.Profile) | [StatusMessage](#Skyle.StatusMessage) | Unary call to set or create a profile. Answers with a status message (success or failure) |
+| DeleteProfile | [Profile](#Skyle.Profile) | [StatusMessage](#Skyle.StatusMessage) | Unary call to delete a profile. Answers with a status message (success or failure) |
+
+ 
+
+
+
+## Scalar Value Types
+
+| .proto Type | Notes | C++ | Java | Python | Go | C# | PHP | Ruby |
+| ----------- | ----- | --- | ---- | ------ | -- | -- | --- | ---- |
+| <a name="double" /> double |  | double | double | float | float64 | double | float | Float |
+| <a name="float" /> float |  | float | float | float | float32 | float | float | Float |
+| <a name="int32" /> int32 | Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint32 instead. | int32 | int | int | int32 | int | integer | Bignum or Fixnum (as required) |
+| <a name="int64" /> int64 | Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint64 instead. | int64 | long | int/long | int64 | long | integer/string | Bignum |
+| <a name="uint32" /> uint32 | Uses variable-length encoding. | uint32 | int | int/long | uint32 | uint | integer | Bignum or Fixnum (as required) |
+| <a name="uint64" /> uint64 | Uses variable-length encoding. | uint64 | long | int/long | uint64 | ulong | integer/string | Bignum or Fixnum (as required) |
+| <a name="sint32" /> sint32 | Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int32s. | int32 | int | int | int32 | int | integer | Bignum or Fixnum (as required) |
+| <a name="sint64" /> sint64 | Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int64s. | int64 | long | int/long | int64 | long | integer/string | Bignum |
+| <a name="fixed32" /> fixed32 | Always four bytes. More efficient than uint32 if values are often greater than 2^28. | uint32 | int | int | uint32 | uint | integer | Bignum or Fixnum (as required) |
+| <a name="fixed64" /> fixed64 | Always eight bytes. More efficient than uint64 if values are often greater than 2^56. | uint64 | long | int/long | uint64 | ulong | integer/string | Bignum |
+| <a name="sfixed32" /> sfixed32 | Always four bytes. | int32 | int | int | int32 | int | integer | Bignum or Fixnum (as required) |
+| <a name="sfixed64" /> sfixed64 | Always eight bytes. | int64 | long | int/long | int64 | long | integer/string | Bignum |
+| <a name="bool" /> bool |  | bool | boolean | boolean | bool | bool | boolean | TrueClass/FalseClass |
+| <a name="string" /> string | A string must always contain UTF-8 encoded or 7-bit ASCII text. | string | String | str/unicode | string | string | string | String (UTF-8) |
+| <a name="bytes" /> bytes | May contain any arbitrary sequence of bytes. | string | ByteString | str | []byte | ByteString | string | String (ASCII-8BIT) |
+
