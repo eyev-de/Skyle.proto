@@ -5,6 +5,10 @@ Using this protocol, you can communicate with a Skyle eye tracker. Skyle is an e
 
 ![](Skyle.png)
 
+## Connection
+
+You can connect to the gRPC service with the published proto file on **skyle.local:50052**.
+
 ## Usage example
 
 **Important: Update to the latest firmware (>= v3.0) on your eye tracker before using this!**
