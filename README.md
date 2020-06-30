@@ -14,7 +14,9 @@ You can connect to the gRPC service with the published proto file on **skyle.loc
 **Important: Update to the latest firmware (>= v3.0) on your eye tracker before using this!**
 
 If you want to try this with your eye tracker without writing code, it is recommended to use the Skyle.proto file with [BloomRPC](https://github.com/uw-labs/bloomrpc).
-It is an open-source GUI Client for gRPC services, that instantly works with the provided proto file.
+It is an open-source GUI Client for gRPC services, that instantly works with the provided proto file:
+
+![](simpleTest.gif)
 
 _For detailed usage, please refer to the [Wiki](https://github.com/eyev-de/Skyle.proto/wiki)._
 
