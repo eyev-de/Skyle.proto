@@ -13,11 +13,13 @@
     - [CalibQuality](#Skyle.CalibQuality)
     - [DeviceVersions](#Skyle.DeviceVersions)
     - [FilterOptions](#Skyle.FilterOptions)
+    - [IPadOptions](#Skyle.IPadOptions)
     - [OptionMessage](#Skyle.OptionMessage)
     - [Options](#Skyle.Options)
     - [Point](#Skyle.Point)
     - [PositioningMessage](#Skyle.PositioningMessage)
     - [Profile](#Skyle.Profile)
+    - [ResetMessage](#Skyle.ResetMessage)
     - [ScreenResolution](#Skyle.ScreenResolution)
     - [StatusMessage](#Skyle.StatusMessage)
     - [calibControlMessages](#Skyle.calibControlMessages)
@@ -206,6 +208,23 @@ Filter configuration message
 
 
 
+<a name="Skyle.IPadOptions"></a>
+
+### IPadOptions
+
+iPad Option message for configuration
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| isOldiOS | [bool](#bool) |  | Set this to true if iOS 13 to 13.3 is used, otherwise false (&gt;= 13.4) |
+| isNotZommed | [bool](#bool) |  | Set this to true if screen zoom is not enabled. It is recommended to use zoom! |
+
+
+
+
+
+
 <a name="Skyle.OptionMessage"></a>
 
 ### OptionMessage
@@ -239,6 +258,7 @@ Option message for configuration
 | enableStandby | [bool](#bool) |  | Enable standby mode if the host (iPad) is not reachable / turned off |
 | disableMouse | [bool](#bool) |  | Disable mouse on windows or testing systems |
 | filter | [FilterOptions](#Skyle.FilterOptions) |  | Filter options for high skilled users, leave empty if skill is not high! |
+| iPadOptions | [IPadOptions](#Skyle.IPadOptions) |  | Optional iPad Pro Settings, leave empty when unused / not sending |
 
 
 
@@ -293,6 +313,24 @@ Message describing a user profile
 | ID | [int32](#int32) |  | Unique ID for a user (on this eye tracker) |
 | name | [string](#string) |  | Name or nickname for the profile |
 | skill | [Profile.Skill](#Skyle.Profile.Skill) |  | Skill of user |
+
+
+
+
+
+
+<a name="Skyle.ResetMessage"></a>
+
+### ResetMessage
+
+Message to request resets
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| services | [bool](#bool) |  | restart services (including gRPC server) |
+| device | [bool](#bool) |  | restart the whole device (takes up to 30 secs) |
+| data | [bool](#bool) |  | reset saved user data and calibs. WARNING! ONLY DO THIS WHEN YOU REALLY WANT TO DELETE ALL USER DATA! |
 
 
 
@@ -387,6 +425,7 @@ Skyle service to use the eye tracker
 | CurrentProfile | [.google.protobuf.Empty](#google.protobuf.Empty) | [Profile](#Skyle.Profile) | Unary call to get the current profile |
 | SetProfile | [Profile](#Skyle.Profile) | [StatusMessage](#Skyle.StatusMessage) | Unary call to set or create a profile. Answers with a status message (success or failure) |
 | DeleteProfile | [Profile](#Skyle.Profile) | [StatusMessage](#Skyle.StatusMessage) | Unary call to delete a profile. Answers with a status message (success or failure) |
+| Reset | [ResetMessage](#Skyle.ResetMessage) | [StatusMessage](#Skyle.StatusMessage) | Unary call to reset specific parts |
 
  
 

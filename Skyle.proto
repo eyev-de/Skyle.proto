@@ -27,6 +27,16 @@ service Skyle {
 	rpc CurrentProfile(google.protobuf.Empty) returns(Profile); //Unary call to get the current profile
 	rpc SetProfile(Profile) returns(StatusMessage); //Unary call to set or create a profile. Answers with a status message (success or failure)
 	rpc DeleteProfile(Profile) returns(StatusMessage); //Unary call to delete a profile. Answers with a status message (success or failure)
+	rpc Reset(ResetMessage) returns(StatusMessage); //Unary call to reset specific parts 
+}
+
+/**
+ * Message to request resets
+*/
+message ResetMessage {
+	bool services = 1; //restart services (including gRPC server)
+	bool device = 2; //restart the whole device (takes up to 30 secs)
+	bool data = 3; //reset saved user data and calibs. WARNING! ONLY DO THIS WHEN YOU REALLY WANT TO DELETE ALL USER DATA!
 }
 
 /**
@@ -153,6 +163,15 @@ message Options {
 	bool enableStandby = 5; //Enable standby mode if the host (iPad) is not reachable / turned off
 	bool disableMouse = 6; //Disable mouse on windows or testing systems
 	FilterOptions filter = 7; //Filter options for high skilled users, leave empty if skill is not high!
+	IPadOptions iPadOptions = 8; //Optional iPad Pro Settings, leave empty when unused / not sending
+}
+
+/**
+ * iPad Option message for configuration
+*/
+message IPadOptions {
+	bool isOldiOS = 1; //Set this to true if iOS 13 to 13.3 is used, otherwise false (>= 13.4)
+	bool isNotZommed = 2; //Set this to true if screen zoom is not enabled. It is recommended to use zoom!
 }
 
 /**
