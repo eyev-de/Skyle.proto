@@ -149,7 +149,9 @@ message PositioningMessage {
 	Point leftEye = 1; //2D position of the left eye
 	Point rightEye = 2; //2D position of the right eye
 	int32 qualityDepth = 3; //Quality indicator for depth positioning. range is -50 to +50. 0 is the best, -50 to far away and 50 to close
-	int32 qualitySides = 4; //Quality indicator for side positioning. range is -50 to +50. 0 is the best, -50 to far left and 50 to far right
+	int32 qualitySides = 4; //Quality indicator for overall horizontal and vertical positioning : range is -50 to +50. 0 is the best
+	int32 qualityXAxis = 5; //Quality indicator for horizontal positioning. range is -50 to +50. 0 is the best, -50 to far left and 50 to far right
+	int32 qualityYAxis = 6; //Quality indicator for vertical positioning. range is -50 to +50. 0 is the best, -50 to far down and 50 to far up
 }
 
 /**

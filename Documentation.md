@@ -294,8 +294,9 @@ Message with eye positions and quality indicators
 | leftEye | [Point](#Skyle.Point) |  | 2D position of the left eye |
 | rightEye | [Point](#Skyle.Point) |  | 2D position of the right eye |
 | qualityDepth | [int32](#int32) |  | Quality indicator for depth positioning. range is -50 to &#43;50. 0 is the best, -50 to far away and 50 to close |
-| qualitySides | [int32](#int32) |  | Quality indicator for side positioning. range is -50 to &#43;50. 0 is the best, -50 to far left and 50 to far right |
-
+| qualitySides | [int32](#int32) |  | Quality indicator for overall horizontal and vertical positioning : range is -50 to &#43;50. 0 is the best |
+| qualityXAxis | [int32](#int32) |  | Quality indicator for horizontal positioning. range is -50 to &#43;50. 0 is the best, -50 to far left and 50 to far right |
+| qualityYAxis | [int32](#int32) |  | Quality indicator for vertical positioning. range is -50 to &#43;50. 0 is the best, -50 to far down and 50 to far up |
 
 
 
