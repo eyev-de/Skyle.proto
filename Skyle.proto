@@ -1,7 +1,7 @@
 /**
  * Full protocol that is used to interface with the Skyle eye tracker with gRPC
  *
- * (c) 2020 eyeV GmbH, written by Mathias Anhalt
+ * (c) 2020 - 2021 eyeV GmbH, written by Mathias Anhalt
  *
  * https://eyev.de/
  */
@@ -19,6 +19,7 @@ service Skyle {
 	rpc Calibrate (stream calibControlMessages) returns (stream CalibMessages); //Used to calibrate for the current user. Streams in both directions with given message types. Client needs to close the stream when done
 	rpc Positioning (google.protobuf.Empty) returns (stream PositioningMessage); //Subscribe a stream sending eye positions and quality indicators to achieve good positioning of a user. Client needs to close the stream when done
 	rpc Gaze (google.protobuf.Empty) returns (stream Point); //Subscribe a gaze stream, that sends coordinates of the current user gaze on a screen. Client needs to close the stream when done
+	rpc Trigger (google.protobuf.Empty) returns (stream TriggerMessage); //Subscribe a trigger stream, that sends trigger messages, when a user fixates a point or clicks. Client needs to close the stream when done
   	rpc GetButton(google.protobuf.Empty) returns(Button); //Unary call to get the button status
 	rpc SetButton(ButtonActions) returns(ButtonActions); //Unary call to configure the button actions, answers with the resulting configuration
 	rpc Configure(OptionMessage) returns (Options); //Unary call to get (OptionMessage -> empty) or set options (OptionMessage -> Options). Answers with the resulting options. Options are saved to the current user profile
@@ -28,6 +29,16 @@ service Skyle {
 	rpc SetProfile(Profile) returns(StatusMessage); //Unary call to set or create a profile. Answers with a status message (success or failure)
 	rpc DeleteProfile(Profile) returns(StatusMessage); //Unary call to delete a profile. Answers with a status message (success or failure)
 	rpc Reset(ResetMessage) returns(StatusMessage); //Unary call to reset specific parts 
+}
+
+/**
+ * Message to indicate a trigger
+*/
+message TriggerMessage {
+	bool singleClick = 1; //indicates single click on attached button
+	bool doubleClick = 2; //indicates double click on attached button
+	bool holdClick = 3; //indicates that attached button is constantly pushed
+	bool fixation = 4; //indicates that a user is fixating a point
 }
 
 /**

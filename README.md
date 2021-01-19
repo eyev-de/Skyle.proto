@@ -26,7 +26,7 @@ Please see the full [documentation here](Documentation.md).
 
 ## Meta
 
-(c) 2020 eyeV GmbH, written by Mathias Anhalt
+(c) 2020 - 2021 eyeV GmbH, written by Mathias Anhalt
 
 Distributed under the MIT license. See ``LICENSE`` for more information.
 

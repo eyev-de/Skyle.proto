@@ -22,6 +22,7 @@
     - [ResetMessage](#Skyle.ResetMessage)
     - [ScreenResolution](#Skyle.ScreenResolution)
     - [StatusMessage](#Skyle.StatusMessage)
+    - [TriggerMessage](#Skyle.TriggerMessage)
     - [calibControlMessages](#Skyle.calibControlMessages)
   
     - [Profile.Skill](#Skyle.Profile.Skill)
@@ -39,7 +40,7 @@
 
 Full protocol that is used to interface with the Skyle eye tracker with gRPC
 
-(c) 2020 eyeV GmbH, written by Mathias Anhalt
+(c) 2020 - 2021 eyeV GmbH, written by Mathias Anhalt
 
 https://eyev.de/
 
@@ -302,6 +303,7 @@ Message with eye positions and quality indicators
 
 
 
+
 <a name="Skyle.Profile"></a>
 
 ### Profile
@@ -371,6 +373,25 @@ General status message
 
 
 
+<a name="Skyle.TriggerMessage"></a>
+
+### TriggerMessage
+
+Message to indicate a trigger
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| singleClick | [bool](#bool) |  | indicates single click on attached button |
+| doubleClick | [bool](#bool) |  | indicates double click on attached button |
+| holdClick | [bool](#bool) |  | indicates that attached button is constantly pushed |
+| fixation | [bool](#bool) |  | indicates that a user is fixating a point |
+
+
+
+
+
+
 <a name="Skyle.calibControlMessages"></a>
 
 ### calibControlMessages
@@ -418,6 +439,7 @@ Skyle service to use the eye tracker
 | Calibrate | [calibControlMessages](#Skyle.calibControlMessages) stream | [CalibMessages](#Skyle.CalibMessages) stream | Used to calibrate for the current user. Streams in both directions with given message types. Client needs to close the stream when done |
 | Positioning | [.google.protobuf.Empty](#google.protobuf.Empty) | [PositioningMessage](#Skyle.PositioningMessage) stream | Subscribe a stream sending eye positions and quality indicators to achieve good positioning of a user. Client needs to close the stream when done |
 | Gaze | [.google.protobuf.Empty](#google.protobuf.Empty) | [Point](#Skyle.Point) stream | Subscribe a gaze stream, that sends coordinates of the current user gaze on a screen. Client needs to close the stream when done |
+| Trigger | [.google.protobuf.Empty](#google.protobuf.Empty) | [TriggerMessage](#Skyle.TriggerMessage) stream | Subscribe a trigger stream, that sends trigger messages, when a user fixates a point or clicks. Client needs to close the stream when done |
 | GetButton | [.google.protobuf.Empty](#google.protobuf.Empty) | [Button](#Skyle.Button) | Unary call to get the button status |
 | SetButton | [ButtonActions](#Skyle.ButtonActions) | [ButtonActions](#Skyle.ButtonActions) | Unary call to configure the button actions, answers with the resulting configuration |
 | Configure | [OptionMessage](#Skyle.OptionMessage) | [Options](#Skyle.Options) | Unary call to get (OptionMessage -&gt; empty) or set options (OptionMessage -&gt; Options). Answers with the resulting options. Options are saved to the current user profile |
