@@ -88,6 +88,7 @@ message calibControlMessages {
   oneof message {
 	CalibControl calibControl = 1; //Message describing the calibration status
 	CalibImprove calibImprove = 2; //Message to improve a calibration
+	CalibConfirm calibConfirm = 3; //Message to confirm this point on a step by step calib
   }
 }
 
@@ -100,6 +101,7 @@ message CalibControl {
 	bool abort = 3; //Indicates an aborted calibration or request an abort
 	bool stopHID = 4; //If connected to an iPad or tablet, this will indicate if the native cursor should move or not
 	ScreenResolution res = 5; //Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used)
+	bool stepByStep = 6; //Indicates a manual step by step calib (each point gets confirmed by client or button)
 }
 
 /**
@@ -116,6 +118,13 @@ message ScreenResolution {
 message CalibImprove {
 	int32 rating = 1; //Improve points that are worse than this rating (1-5)
 	bool stopHID = 2; //If connected to an iPad or tablet, this will indicate if the native cursor should move or not
+}
+
+/**
+ * Message to confirm a calibration point
+*/
+message CalibConfirm {
+	bool confirmed = 1; //confirmed this point
 }
 
 /**

@@ -6,6 +6,7 @@
 - [Skyle.proto](#Skyle.proto)
     - [Button](#Skyle.Button)
     - [ButtonActions](#Skyle.ButtonActions)
+    - [CalibConfirm](#Skyle.CalibConfirm)
     - [CalibControl](#Skyle.CalibControl)
     - [CalibImprove](#Skyle.CalibImprove)
     - [CalibMessages](#Skyle.CalibMessages)
@@ -81,6 +82,22 @@ Representing the three available button actions
 
 
 
+<a name="Skyle.CalibConfirm"></a>
+
+### CalibConfirm
+
+Message to confirm a calibration point
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| confirmed | [bool](#bool) |  | confirmed this point |
+
+
+
+
+
+
 <a name="Skyle.CalibControl"></a>
 
 ### CalibControl
@@ -95,6 +112,7 @@ Message describing the calibration status
 | abort | [bool](#bool) |  | Indicates an aborted calibration or request an abort |
 | stopHID | [bool](#bool) |  | If connected to an iPad or tablet, this will indicate if the native cursor should move or not |
 | res | [ScreenResolution](#Skyle.ScreenResolution) |  | Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used) |
+| stepByStep | [bool](#bool) |  | Indicates a manual step by step calib (each point gets confirmed by client or button) |
 
 
 
@@ -403,6 +421,7 @@ Message wrapping possible calibration control messages for a client
 | ----- | ---- | ----- | ----------- |
 | calibControl | [CalibControl](#Skyle.CalibControl) |  | Message describing the calibration status |
 | calibImprove | [CalibImprove](#Skyle.CalibImprove) |  | Message to improve a calibration |
+| calibConfirm | [CalibConfirm](#Skyle.CalibConfirm) |  | Message to confirm this point on a step by step calib |
 
 
 
