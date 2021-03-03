@@ -278,6 +278,8 @@ Option message for configuration
 | disableMouse | [bool](#bool) |  | Disable mouse on windows or testing systems |
 | filter | [FilterOptions](#Skyle.FilterOptions) |  | Filter options for high skilled users, leave empty if skill is not high! |
 | iPadOptions | [IPadOptions](#Skyle.IPadOptions) |  | Optional iPad Pro Settings, leave empty when unused / not sending |
+| res | [ScreenResolution](#Skyle.ScreenResolution) |  | Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used) |
+| hp | [bool](#bool) |  | Reserved bool (DO NOT USE) |
 
 
 

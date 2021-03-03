@@ -186,6 +186,8 @@ message Options {
 	bool disableMouse = 6; //Disable mouse on windows or testing systems
 	FilterOptions filter = 7; //Filter options for high skilled users, leave empty if skill is not high!
 	IPadOptions iPadOptions = 8; //Optional iPad Pro Settings, leave empty when unused / not sending
+	ScreenResolution res = 9; //Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used)
+	bool hp = 10; //Reserved bool (DO NOT USE)
 }
 
 /**
