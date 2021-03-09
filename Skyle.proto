@@ -110,6 +110,8 @@ message CalibControl {
 message ScreenResolution {
 	int32 width = 5; //Width in pixel
 	int32 height = 6; //Height in pixel
+	int32 widthinMM = 7; //Width in mm
+	int32 heightinMM = 8; //Height in mm
 }
 
 /**

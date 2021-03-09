@@ -371,6 +371,8 @@ Message with screen resolution of the client
 | ----- | ---- | ----- | ----------- |
 | width | [int32](#int32) |  | Width in pixel |
 | height | [int32](#int32) |  | Height in pixel |
+| widthinMM | [int32](#int32) |  | Width in mm |
+| heightinMM | [int32](#int32) |  | Height in mm |
 
 
 
