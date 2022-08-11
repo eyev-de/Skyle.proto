@@ -3,7 +3,10 @@
 Description and documentation of the Skyle gRPC interface, written in Protocol Buffers Version 3.
 Using this protocol, you can communicate with a Skyle eye tracker. Skyle is an eye tracking device made and sold by [eyeV GmbH](https://eyev.de/).
 
-![](Skyle.png)
+#### Supported devices
+| Skyle (first generation) | Skyle (second generation) |
+| ---------- | ---- |
+| ![](Skyle.jpg) | ![](Skyle2.jpg) |
 
 ## Connection
 
@@ -26,7 +29,7 @@ Please see the full [documentation here](Documentation.md).
 
 ## Meta
 
-(c) 2020 - 2021 eyeV GmbH, written by Mathias Anhalt
+(c) 2020 - 2022 eyeV GmbH, written by Mathias Anhalt
 
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
