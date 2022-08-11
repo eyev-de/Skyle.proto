@@ -209,9 +209,21 @@ message Options {
 message IPadOptions {
 	bool isOldiOS = 1; //Set this to true if iOS 13 to 13.3 is used, otherwise false (>= 13.4)
 	bool isNotZommed = 2; //Set this to true if screen zoom is not enabled. It is recommended to use zoom!
-	enum iPadModel { //Set this to the iPad model you are using. If the device isn't an iPad, this value will be ignored
-		iPadPro12_9 = 0;
-		iPadAir2022 = 1;
+	enum iPadModel { //Set this to the iPad model you are using. If the device isn't an iPad, this value will be ignored.
+		iPad8_5 = 0; //iPad Pro (12.9-inch) (3rd generation)
+		iPad8_6 = 1; //iPad Pro (12.9-inch) (3rd generation)
+		iPad8_7 = 2; //iPad Pro (12.9-inch) (3rd generation)
+		iPad8_8 = 3; //iPad Pro (12.9-inch) (3rd generation)
+		iPad8_11 = 4; //iPad Pro (12.9-inch) (4th generation)
+		iPad8_12 = 5; //iPad Pro (12.9-inch) (4th generation)
+		iPad13_1 = 6; //iPad Air (4th generation)
+		iPad13_2 = 7; //iPad Air (4th generation)
+		iPad13_8 = 8; //iPad Pro (12.9-inch) (5th generation)
+		iPad13_9 = 9; //iPad Pro (12.9-inch) (5th generation)
+		iPad13_10 = 10; //iPad Pro (12.9-inch) (5th generation)
+		iPad13_11 = 11; //iPad Pro (12.9-inch) (5th generation)
+		iPad13_16 = 12; //iPad Air (5th generation)
+		iPad13_17 = 13; //iPad Air (5th generation)
 	}
 	iPadModel model = 3;
 }

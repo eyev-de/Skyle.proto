@@ -238,7 +238,36 @@ iPad Option message for configuration
 | ----- | ---- | ----- | ----------- |
 | isOldiOS | [bool](#bool) |  | Set this to true if iOS 13 to 13.3 is used, otherwise false (&gt;= 13.4) |
 | isNotZommed | [bool](#bool) |  | Set this to true if screen zoom is not enabled. It is recommended to use zoom! |
+| iPadModel | [enum](#enum) |  | Set this to the iPad model you are using. If the device isn't an iPad, this value will be ignored. |
 
+#### iPadModel is the modelname
+
+In Swift this modelname can be read with the following snippet:
+```swift
+var systemInfo = utsname()
+uname(&systemInfo)
+let modelCode = withUnsafePointer(to: &systemInfo.machine) {
+    $0.withMemoryRebound(to: CChar.self, capacity: 1) {
+        ptr in String.init(validatingUTF8: ptr)
+    }
+}
+print(modelCode)
+```
+
+	iPad8_5 = iPad Pro (12.9-inch) (3rd generation)
+	iPad8_6 = iPad Pro (12.9-inch) (3rd generation)
+	iPad8_7 = iPad Pro (12.9-inch) (3rd generation)
+	iPad8_8 = iPad Pro (12.9-inch) (3rd generation)
+	iPad8_11 = iPad Pro (12.9-inch) (4th generation)
+	iPad8_12 = iPad Pro (12.9-inch) (4th generation)
+	iPad13_1 = iPad Air (4th generation)
+	iPad13_2 = iPad Air (4th generation)
+	iPad13_8 = iPad Pro (12.9-inch) (5th generation)
+	iPad13_9 = iPad Pro (12.9-inch) (5th generation)
+	iPad13_10 = iPad Pro (12.9-inch) (5th generation)
+	iPad13_11 = iPad Pro (12.9-inch) (5th generation)
+	iPad13_16 = iPad Air (5th generation)
+	iPad13_17 = iPad Air (5th generation)
 
 
 
