@@ -225,7 +225,9 @@ message IPadOptions {
 		iPad13_16 = 12; //iPad Air (5th generation)
 		iPad13_17 = 13; //iPad Air (5th generation)
 	}
-	optional iPadModel model = 3;
+	oneof optional_model {
+		iPadModel model = 3;
+	}
 }
 
 /**
