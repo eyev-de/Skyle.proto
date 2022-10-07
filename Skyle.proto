@@ -1,10 +1,10 @@
 /**
- * Full protocol that is used to interface with the Skyle eye tracker with gRPC
- *
- * (c) 2020 - 2022 eyeV GmbH, written by Mathias Anhalt
- *
- * https://eyev.de/
- */
+* Full protocol that is used to interface with the Skyle eye tracker with gRPC
+*
+* (c) 2020 - 2022 eyeV GmbH, written by Mathias Anhalt
+*
+* https://eyev.de/
+*/
 syntax = "proto3";
 option csharp_namespace = "Skyle_Server";
 
@@ -13,217 +13,217 @@ import "google/protobuf/empty.proto";
 package Skyle;
 
 /**
- * Skyle service to use the eye tracker
+* Skyle service to use the eye tracker
 */
 service Skyle {
-	rpc Calibrate (stream calibControlMessages) returns (stream CalibMessages); //Used to calibrate for the current user. Streams in both directions with given message types. Client needs to close the stream when done
-	rpc Positioning (google.protobuf.Empty) returns (stream PositioningMessage); //Subscribe a stream sending eye positions and quality indicators to achieve good positioning of a user. Client needs to close the stream when done
-	rpc Gaze (google.protobuf.Empty) returns (stream Point); //Subscribe a gaze stream, that sends coordinates of the current user gaze on a screen. Client needs to close the stream when done
-	rpc Trigger (google.protobuf.Empty) returns (stream TriggerMessage); //Subscribe a trigger stream, that sends trigger messages, when a user fixates a point or clicks. Client needs to close the stream when done
-  	rpc GetButton(google.protobuf.Empty) returns(Button); //Unary call to get the button status
-	rpc SetButton(ButtonActions) returns(ButtonActions); //Unary call to configure the button actions, answers with the resulting configuration
-	rpc Configure(OptionMessage) returns (Options); //Unary call to get (OptionMessage -> empty) or set options (OptionMessage -> Options). Answers with the resulting options. Options are saved to the current user profile
-	rpc GetVersions(google.protobuf.Empty) returns(DeviceVersions); //Unary call to get software versions
-	rpc GetProfiles(google.protobuf.Empty) returns (stream Profile); //Subscribe a profile stream of all available profiles. Host ends stream when all results are sent
-	rpc CurrentProfile(google.protobuf.Empty) returns(Profile); //Unary call to get the current profile
-	rpc SetProfile(Profile) returns(StatusMessage); //Unary call to set or create a profile. Answers with a status message (success or failure)
-	rpc DeleteProfile(Profile) returns(StatusMessage); //Unary call to delete a profile. Answers with a status message (success or failure)
-	rpc Reset(ResetMessage) returns(StatusMessage); //Unary call to reset specific parts 
-	rpc CursorCalibration (stream calibCursorMessages) returns (stream Point); //Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done
+	rpc Calibrate (stream calibControlMessages) returns (stream CalibMessages); // Used to calibrate for the current user. Streams in both directions with given message types. Client needs to close the stream when done
+	rpc Positioning (google.protobuf.Empty) returns (stream PositioningMessage); // Subscribe a stream sending eye positions and quality indicators to achieve good positioning of a user. Client needs to close the stream when done
+	rpc Gaze (google.protobuf.Empty) returns (stream Point); // Subscribe a gaze stream, that sends coordinates of the current user gaze on a screen. Client needs to close the stream when done
+	rpc Trigger (google.protobuf.Empty) returns (stream TriggerMessage); // Subscribe a trigger stream, that sends trigger messages, when a user fixates a point or clicks. Client needs to close the stream when done
+	rpc GetButton(google.protobuf.Empty) returns(Button); // Unary call to get the button status
+	rpc SetButton(ButtonActions) returns(ButtonActions); // Unary call to configure the button actions, answers with the resulting configuration
+	rpc Configure(OptionMessage) returns (Options); // Unary call to get (OptionMessage -> empty) or set options (OptionMessage -> Options). Answers with the resulting options. Options are saved to the current user profile
+	rpc GetVersions(google.protobuf.Empty) returns(DeviceVersions); // Unary call to get software versions
+	rpc GetProfiles(google.protobuf.Empty) returns (stream Profile); // Subscribe a profile stream of all available profiles. Host ends stream when all results are sent
+	rpc CurrentProfile(google.protobuf.Empty) returns(Profile); // Unary call to get the current profile
+	rpc SetProfile(Profile) returns(StatusMessage); // Unary call to set or create a profile. Answers with a status message (success or failure)
+	rpc DeleteProfile(Profile) returns(StatusMessage); // Unary call to delete a profile. Answers with a status message (success or failure)
+	rpc Reset(ResetMessage) returns(StatusMessage); // Unary call to reset specific parts 
+	rpc CursorCalibration (stream calibCursorMessages) returns (stream Point); // Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done
 }
 
 /**
- * Message to indicate a trigger
+* Message to indicate a trigger
 */
 message TriggerMessage {
-	bool singleClick = 1; //indicates single click on attached button
-	bool doubleClick = 2; //indicates double click on attached button
-	bool holdClick = 3; //indicates that attached button is constantly pushed
-	bool fixation = 4; //indicates that a user is fixating a point
+	bool singleClick = 1; // indicates single click on attached button
+	bool doubleClick = 2; // indicates double click on attached button
+	bool holdClick = 3; // indicates that attached button is constantly pushed
+	bool fixation = 4; // indicates that a user is fixating a point
 }
 
 /**
- * Message to request resets
+* Message to request resets
 */
 message ResetMessage {
-	bool services = 1; //restart services (including gRPC server)
-	bool device = 2; //restart the whole device (takes up to 30 secs)
-	bool data = 3; //reset saved user data and calibs. WARNING! ONLY DO THIS WHEN YOU REALLY WANT TO DELETE ALL USER DATA!
+	bool services = 1; // restart services (including gRPC server)
+	bool device = 2; // restart the whole device (takes up to 30 secs)
+	bool data = 3; // reset saved user data and calibs. WARNING! ONLY DO THIS WHEN YOU REALLY WANT TO DELETE ALL USER DATA!
 }
 
 /**
- * Message describing a user profile
+* Message describing a user profile
 */
 message Profile {
-	int32 ID = 1; //Unique ID for a user (on this eye tracker)
-	string name = 2; //Name or nickname for the profile
+	int32 id = 1; // Unique ID for a user (on this eye tracker)
+	string name = 2; // Name or nickname for the profile
 	enum Skill {
-		Low = 0; //User is unpractised and has maybe cognitive impairment. this will cause the eye tracker to filter gaze data harder (less precision)
-		Medium = 1; //User that understands the operation. Default filtering will take place
-		High = 2; //User that is experienced with eye tracking and wants to control the filtering himself
+		low = 0; // User is unpractised and has maybe cognitive impairment. this will cause the eye tracker to filter gaze data harder (less precision)
+		medium = 1; // User that understands the operation. Default filtering will take place
+		high = 2; // User that is experienced with eye tracking and wants to control the filtering himself
 	}
-	Skill skill = 3; //Skill of user
+	Skill skill = 3; // Skill of user
 }
 
 /**
- * General status message
+* General status message
 */
 message StatusMessage {
-	bool success = 1; //True on success, false on failure
+	bool success = 1; // True on success, false on failure
 }
 
 /**
- * Message to wrap the options message: either empty or filled with options
+* Message to wrap the options message: either empty or filled with options
 */
 message OptionMessage {
-  oneof message {
-	google.protobuf.Empty empty = 1; //Empty message
-	Options options = 2; //Options
-  }
+oneof message {
+	google.protobuf.Empty empty = 1; // Empty message
+	Options options = 2; // Options
+}
 }
 
 /**
- * Message wrapping possible calibration control messages for a client
+* Message wrapping possible calibration control messages for a client
 */
 message calibControlMessages {
-  oneof message {
-	CalibControl calibControl = 1; //Message describing the calibration status
-	CalibImprove calibImprove = 2; //Message to improve a calibration
-	CalibConfirm calibConfirm = 3; //Message to confirm this point on a step by step calib
-  }
+oneof message {
+	CalibControl calibControl = 1; // Message describing the calibration status
+	CalibImprove calibImprove = 2; // Message to improve a calibration
+	CalibConfirm calibConfirm = 3; // Message to confirm this point on a step by step calib
+}
 }
 
 /**
- * Message wrapping possible cursor calibration messages for a client
+* Message wrapping possible cursor calibration messages for a client
 */
 message calibCursorMessages {
-  oneof message {
-	google.protobuf.Empty empty = 1; //Empty message (start)
-	CalibConfirm calibConfirm = 3; //Message to confirm the next point
-  }
+oneof message {
+	google.protobuf.Empty empty = 1; // Empty message (start)
+	CalibConfirm calibConfirm = 3; // Message to confirm the next point
+}
 }
 
 /**
- * Message describing the calibration status
+* Message describing the calibration status
 */
 message CalibControl {
-	bool calibrate = 1; //Indicates a running calibration or requests a calibration
-	int32 numberOfPoints = 2; //Number of calibration points, currently 5 and 9 is accepted
-	bool abort = 3; //Indicates an aborted calibration or request an abort
-	bool stopHID = 4; //If connected to an iPad or tablet, this will indicate if the native cursor should move or not
-	ScreenResolution res = 5; //Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used)
-	bool stepByStep = 6; //Indicates a manual step by step calib (each point gets confirmed by client or button)
+	bool calibrate = 1; // Indicates a running calibration or requests a calibration
+	int32 numberOfPoints = 2; // Number of calibration points, currently 5 and 9 is accepted
+	bool abort = 3; // Indicates an aborted calibration or request an abort
+	bool stopHID = 4; // If connected to an iPad or tablet, this will indicate if the native cursor should move or not
+	ScreenResolution res = 5; // Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used)
+	bool stepByStep = 6; // Indicates a manual step by step calib (each point gets confirmed by client or button)
 }
 
 /**
- * Message with screen resolution of the client
+* Message with screen resolution of the client
 */
 message ScreenResolution {
-	int32 width = 5; //Width in pixel
-	int32 height = 6; //Height in pixel
-	int32 widthinMM = 7; //Width in mm
-	int32 heightinMM = 8; //Height in mm
+	int32 width = 5; // Width in pixel
+	int32 height = 6; // Height in pixel
+	int32 widthInMM = 7; // Width in mm
+	int32 heightInMM = 8; // Height in mm
 }
 
 /**
- * Message to improve a calibration
+* Message to improve a calibration
 */
 message CalibImprove {
-	int32 rating = 1; //Improve points that are worse than this rating (1-5)
-	bool stopHID = 2; //If connected to an iPad or tablet, this will indicate if the native cursor should move or not
+	int32 rating = 1; // Improve points that are worse than this rating (1-5)
+	bool stopHID = 2; // If connected to an iPad or tablet, this will indicate if the native cursor should move or not
 }
 
 /**
- * Message to confirm a calibration point
+* Message to confirm a calibration point
 */
 message CalibConfirm {
-	bool confirmed = 1; //confirmed this point
+	bool confirmed = 1; // confirmed this point
 }
 
 /**
- * Message wrapping calibration host messages
+* Message wrapping calibration host messages
 */
 message CalibMessages {
-  oneof message {
-	CalibControl calibControl = 1; //Message describing the calibration status, gets sent on change
-    CalibPoint calibPoint = 2; //Calibration point that gets sent on change
-	CalibQuality calibQuality = 3; //Calibration quality, gets sent when calibration is done
-  }
+oneof message {
+	CalibControl calibControl = 1; // Message describing the calibration status, gets sent on change
+	CalibPoint calibPoint = 2; // Calibration point that gets sent on change
+	CalibQuality calibQuality = 3; // Calibration quality, gets sent when calibration is done
+}
 }
 
 /**
- * Message for a 2D point
+* Message for a 2D point
 */
 message Point {
-	double x = 1; //Precise X value
-	double y = 2; //Precise Y value
+	double x = 1; // Precise X value
+	double y = 2; // Precise Y value
 }
 
 /**
- * Message describing a calibration point
+* Message describing a calibration point
 */
 message CalibPoint {
-	int32 count = 1; //Number of calibration point: 0 to 8 for 9 point calibration, 0 to 4 for 5 point calibration
-	Point currentPoint = 2; //2D point with coordinates
+	int32 count = 1; // Number of calibration point: 0 to 8 for 9 point calibration, 0 to 4 for 5 point calibration
+	Point currentPoint = 2; // 2D point with coordinates
 }
 
 /**
- * Message describing the quality of a calibration
+* Message describing the quality of a calibration
 */
 message CalibQuality {
-	double quality = 1; //Overall quality: 1 is worst, 5 is best
-	repeated double qualitys = 2; //List of quality per calibration point: 1 is worst, 5 is best
+	double quality = 1; // Overall quality: 1 is worst, 5 is best
+	repeated double qualities = 2; // List of quality per calibration point: 1 is worst, 5 is best
 }
 
 /**
- * Message with eye positions and quality indicators
+* Message with eye positions and quality indicators
 */
 message PositioningMessage {
-	Point leftEye = 1; //2D position of the left eye
-	Point rightEye = 2; //2D position of the right eye
-	int32 qualityDepth = 3; //Quality indicator for depth positioning. range is -50 to +50. 0 is the best, -50 to far away and 50 to close
-	int32 qualitySides = 4; //Quality indicator for overall horizontal and vertical positioning : range is -50 to +50. 0 is the best
-	int32 qualityXAxis = 5; //Quality indicator for horizontal positioning. range is -50 to +50. 0 is the best, -50 to far left and 50 to far right
-	int32 qualityYAxis = 6; //Quality indicator for vertical positioning. range is -50 to +50. 0 is the best, -50 to far down and 50 to far up
+	Point leftEye = 1; // 2D position of the left eye
+	Point rightEye = 2; // 2D position of the right eye
+	int32 distanceQuality = 3; // Quality indicator for depth positioning. range is -50 to +50. 0 is the best, -50 to far away and 50 to close
+	int32 positioningQuality = 4; // Quality indicator for overall horizontal and vertical positioning : range is -50 to +50. 0 is the best
+	int32 horizontalQuality = 5; // Quality indicator for horizontal positioning. range is -50 to +50. 0 is the best, -50 to far left and 50 to far right
+	int32 verticalQuality = 6; // Quality indicator for vertical positioning. range is -50 to +50. 0 is the best, -50 to far down and 50 to far up
 }
 
 /**
- * Option message for configuration
+* Option message for configuration
 */
 message Options {
-	bool stream = 1; //Turn on an image stream @ http://skyle.local:8080
-	bool enablePause = 2; //Allow pause by API or by looking into the camera for 5 seconds
-	bool pause = 3; //Pause the eye tracker - enablePause needs to be true
-	bool guidance = 4; //Deprecated: stream a positioning stream instead of an image stream (DO NOT USE)
-	bool enableStandby = 5; //Enable standby mode if the host (iPad) is not reachable / turned off
-	bool disableMouse = 6; //Disable mouse on windows or testing systems
-	FilterOptions filter = 7; //Filter options for high skilled users, leave empty if skill is not high!
-	IPadOptions iPadOptions = 8; //Optional iPad Pro Settings, leave empty when unused / not sending
-	ScreenResolution res = 9; //Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used)
-	bool hp = 10; //Reserved bool (DO NOT USE)
+	bool stream = 1; // Turn on an image stream @ http:// skyle.local:8080
+	bool enablePause = 2; // Allow pause by API or by looking into the camera for 5 seconds
+	bool pause = 3; // Pause the eye tracker - enablePause needs to be true
+	bool guidance = 4; // Deprecated: stream a positioning stream instead of an image stream (DO NOT USE)
+	bool enableStandby = 5; // Enable standby mode if the host (iPad) is not reachable / turned off
+	bool disableMouse = 6; // Disable mouse on windows or testing systems
+	FilterOptions filter = 7; // Filter options for high skilled users, leave empty if skill is not high!
+	IPadOptions iPadOptions = 8; // Optional iPad Pro Settings, leave empty when unused / not sending
+	ScreenResolution res = 9; // Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used)
+	bool hp = 10; // Reserved bool (DO NOT USE)
 }
 
 /**
- * iPad Option message for configuration
+* iPad Option message for configuration
 */
 message IPadOptions {
-	bool isOldiOS = 1; //Set this to true if iOS 13 to 13.3 is used, otherwise false (>= 13.4)
-	bool isNotZommed = 2; //Set this to true if screen zoom is not enabled. It is recommended to use zoom!
-	enum iPadModel { //Set this to the iPad model you are using. If the device isn't an iPad, this value will be ignored.
-		iPad8_5 = 0; //iPad Pro (12.9-inch) (3rd generation)
-		iPad8_6 = 1; //iPad Pro (12.9-inch) (3rd generation)
-		iPad8_7 = 2; //iPad Pro (12.9-inch) (3rd generation)
-		iPad8_8 = 3; //iPad Pro (12.9-inch) (3rd generation)
-		iPad8_11 = 4; //iPad Pro (12.9-inch) (4th generation)
-		iPad8_12 = 5; //iPad Pro (12.9-inch) (4th generation)
-		iPad13_1 = 6; //iPad Air (4th generation)
-		iPad13_2 = 7; //iPad Air (4th generation)
-		iPad13_8 = 8; //iPad Pro (12.9-inch) (5th generation)
-		iPad13_9 = 9; //iPad Pro (12.9-inch) (5th generation)
-		iPad13_10 = 10; //iPad Pro (12.9-inch) (5th generation)
-		iPad13_11 = 11; //iPad Pro (12.9-inch) (5th generation)
-		iPad13_16 = 12; //iPad Air (5th generation)
-		iPad13_17 = 13; //iPad Air (5th generation)
+	bool isOldiOS = 1; // Set this to true if iOS 13 to 13.3 is used, otherwise false (>= 13.4)
+	bool isNotZoomed = 2; // Set this to true if screen zoom is not enabled. It is recommended to use zoom!
+	enum iPadModel { // Set this to the iPad model you are using. If the device isn't an iPad, this value will be ignored.
+		iPad8_5 = 0; // iPad Pro (12.9-inch) (3rd generation)
+		iPad8_6 = 1; // iPad Pro (12.9-inch) (3rd generation)
+		iPad8_7 = 2; // iPad Pro (12.9-inch) (3rd generation)
+		iPad8_8 = 3; // iPad Pro (12.9-inch) (3rd generation)
+		iPad8_11 = 4; // iPad Pro (12.9-inch) (4th generation)
+		iPad8_12 = 5; // iPad Pro (12.9-inch) (4th generation)
+		iPad13_1 = 6; // iPad Air (4th generation)
+		iPad13_2 = 7; // iPad Air (4th generation)
+		iPad13_8 = 8; // iPad Pro (12.9-inch) (5th generation)
+		iPad13_9 = 9; // iPad Pro (12.9-inch) (5th generation)
+		iPad13_10 = 10; // iPad Pro (12.9-inch) (5th generation)
+		iPad13_11 = 11; // iPad Pro (12.9-inch) (5th generation)
+		iPad13_16 = 12; // iPad Air (5th generation)
+		iPad13_17 = 13; // iPad Air (5th generation)
 	}
 	oneof optional_model {
 		iPadModel model = 3;
@@ -231,40 +231,40 @@ message IPadOptions {
 }
 
 /**
- * Message containing all build versions
+* Message containing all build versions
 */
 message DeviceVersions {
-	string firmware = 1; //Version of the firmware
-	string eyetracker = 2; //Version of the eye tracking software
-	string calib = 3; //Version of the calibration software
-	string base = 4; //Version of the base system
-	uint64 serial = 5; //Unique serial of this device
-	int32 skyleType = 6; //Product type: 4 means iPad version, 1 means developer or windows version
-	bool isDemo = 7; //Indicator if this is a demo device
+	string firmware = 1; // Version of the firmware
+	string eyetracker = 2; // Version of the eye tracking software
+	string calib = 3; // Version of the calibration software
+	string base = 4; // Version of the base system
+	uint64 serial = 5; // Unique serial of this device
+	int32 skyleType = 6; // Product type: 4 means iPad version, 1 means developer or windows version
+	bool isDemo = 7; // Indicator if this is a demo device
 }
 
 /**
- * Representing the three available button actions 
+* Representing the three available button actions 
 */
 message ButtonActions {
-	string singleClick = 1; //Action to trigger, when a single click on the button is performed
-	string doubleClick = 2; //Action to trigger, when a double click on the button is performed
-	string holdClick = 3; //Action to trigger when the button is constantly pushed
+	string singleClick = 1; // Action to trigger, when a single click on the button is performed
+	string doubleClick = 2; // Action to trigger, when a double click on the button is performed
+	string holdClick = 3; // Action to trigger when the button is constantly pushed
 }
 
 /**
- * Button message
+* Button message
 */
 message Button {
-	bool isPresent = 1; //Indicates if a button is connected to the eye tracker
-	ButtonActions buttonActions = 2; //Configured button actions
-	repeated string availableActions = 3; //List with available actions, currently: "none", "unknown", "leftClick", "rightClick", "scroll", "calibrate"
+	bool isPresent = 1; // Indicates if a button is connected to the eye tracker
+	ButtonActions buttonActions = 2; // Configured button actions
+	repeated string availableActions = 3; // List with available actions, currently: "none", "unknown", "leftClick", "rightClick", "scroll", "calibrate"
 }
 
 /**
- * Filter configuration message
+* Filter configuration message
 */
 message FilterOptions {
-	int32 fixationFilter = 1; //Filter for fixations. range is 3 to 33 (3 high speed, less filtering and 33 low speed, hard filtering)
-	int32 gazeFilter = 2; //Filter for gaze. range is 3 to 33 (3 high speed, less filtering and 33 low speed, hard filtering)
+	int32 fixationFilter = 1; // Filter for fixations. range is 3 to 33 (3 high speed, less filtering and 33 low speed, hard filtering)
+	int32 gazeFilter = 2; // Filter for gaze. range is 3 to 33 (3 high speed, less filtering and 33 low speed, hard filtering)
 }
