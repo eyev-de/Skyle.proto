@@ -30,6 +30,16 @@ service Skyle {
 	rpc DeleteProfile(Profile) returns(StatusMessage); // Unary call to delete a profile. Answers with a status message (success or failure)
 	rpc Reset(ResetMessage) returns(StatusMessage); // Unary call to reset specific parts 
 	rpc CursorCalibration (stream calibCursorMessages) returns (stream Point); // Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done
+	rpc RawImages (google.protobuf.Empty) returns (stream RawImage); // Subscribe a raw image stream that sends unencoded frames. Client needs to close the stream when done
+}
+
+/**
+* Single image in grayscale raw bytes
+*/
+message RawImage {
+    int32 width = 1; // pixel width
+    int32 height = 2; // pixel height
+	bytes data = 3; // bytes of image
 }
 
 /**

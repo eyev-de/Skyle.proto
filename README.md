@@ -10,7 +10,8 @@ Using this protocol, you can communicate with a Skyle eye tracker. Skyle is an e
 
 ## Connection
 
-You can connect to the gRPC service with the published proto file on **skyle.local:50052**.
+You can connect to the gRPC service with the published proto file on **skyle.local:50052**. 
+If you use our Skyle Integration Kit (SIK) connect to port 50051 (**skyle.local:50051**).
 
 ## Usage example
 

@@ -3,60 +3,61 @@
 
 ## Table of Contents
 
-- [Skyle.proto](#Skyle.proto)
-    - [Button](#Skyle.Button)
-    - [ButtonActions](#Skyle.ButtonActions)
-    - [CalibConfirm](#Skyle.CalibConfirm)
-    - [CalibControl](#Skyle.CalibControl)
-    - [CalibImprove](#Skyle.CalibImprove)
-    - [CalibMessages](#Skyle.CalibMessages)
-    - [CalibPoint](#Skyle.CalibPoint)
-    - [CalibQuality](#Skyle.CalibQuality)
-    - [DeviceVersions](#Skyle.DeviceVersions)
-    - [FilterOptions](#Skyle.FilterOptions)
-    - [IPadOptions](#Skyle.IPadOptions)
-    - [OptionMessage](#Skyle.OptionMessage)
-    - [Options](#Skyle.Options)
-    - [Point](#Skyle.Point)
-    - [PositioningMessage](#Skyle.PositioningMessage)
-    - [Profile](#Skyle.Profile)
-    - [ResetMessage](#Skyle.ResetMessage)
-    - [ScreenResolution](#Skyle.ScreenResolution)
-    - [StatusMessage](#Skyle.StatusMessage)
-    - [TriggerMessage](#Skyle.TriggerMessage)
-    - [calibControlMessages](#Skyle.calibControlMessages)
+- [Skyle.proto](#Skyle-proto)
+    - [Button](#Skyle-Button)
+    - [ButtonActions](#Skyle-ButtonActions)
+    - [CalibConfirm](#Skyle-CalibConfirm)
+    - [CalibControl](#Skyle-CalibControl)
+    - [CalibImprove](#Skyle-CalibImprove)
+    - [CalibMessages](#Skyle-CalibMessages)
+    - [CalibPoint](#Skyle-CalibPoint)
+    - [CalibQuality](#Skyle-CalibQuality)
+    - [DeviceVersions](#Skyle-DeviceVersions)
+    - [FilterOptions](#Skyle-FilterOptions)
+    - [IPadOptions](#Skyle-IPadOptions)
+    - [OptionMessage](#Skyle-OptionMessage)
+    - [Options](#Skyle-Options)
+    - [Point](#Skyle-Point)
+    - [PositioningMessage](#Skyle-PositioningMessage)
+    - [Profile](#Skyle-Profile)
+    - [RawImage](#Skyle-RawImage)
+    - [ResetMessage](#Skyle-ResetMessage)
+    - [ScreenResolution](#Skyle-ScreenResolution)
+    - [StatusMessage](#Skyle-StatusMessage)
+    - [TriggerMessage](#Skyle-TriggerMessage)
+    - [calibControlMessages](#Skyle-calibControlMessages)
+    - [calibCursorMessages](#Skyle-calibCursorMessages)
   
-    - [Profile.Skill](#Skyle.Profile.Skill)
+    - [IPadOptions.iPadModel](#Skyle-IPadOptions-iPadModel)
+    - [Profile.Skill](#Skyle-Profile-Skill)
   
-    - [Skyle](#Skyle.Skyle)
+    - [Skyle](#Skyle-Skyle)
   
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="Skyle.proto"></a>
+<a name="Skyle-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
 ## Skyle.proto
-
 Full protocol that is used to interface with the Skyle eye tracker with gRPC
 
-(c) 2020 - 2021 eyeV GmbH, written by Mathias Anhalt
+(c) 2020 - 2022 eyeV GmbH, written by Mathias Anhalt
 
 https://eyev.de/
 
 
-<a name="Skyle.Button"></a>
+<a name="Skyle-Button"></a>
 
 ### Button
-
 Button message
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | isPresent | [bool](#bool) |  | Indicates if a button is connected to the eye tracker |
-| buttonActions | [ButtonActions](#Skyle.ButtonActions) |  | Configured button actions |
+| buttonActions | [ButtonActions](#Skyle-ButtonActions) |  | Configured button actions |
 | availableActions | [string](#string) | repeated | List with available actions, currently: &#34;none&#34;, &#34;unknown&#34;, &#34;leftClick&#34;, &#34;rightClick&#34;, &#34;scroll&#34;, &#34;calibrate&#34; |
 
 
@@ -64,10 +65,9 @@ Button message
 
 
 
-<a name="Skyle.ButtonActions"></a>
+<a name="Skyle-ButtonActions"></a>
 
 ### ButtonActions
-
 Representing the three available button actions
 
 
@@ -82,10 +82,9 @@ Representing the three available button actions
 
 
 
-<a name="Skyle.CalibConfirm"></a>
+<a name="Skyle-CalibConfirm"></a>
 
 ### CalibConfirm
-
 Message to confirm a calibration point
 
 
@@ -98,10 +97,9 @@ Message to confirm a calibration point
 
 
 
-<a name="Skyle.CalibControl"></a>
+<a name="Skyle-CalibControl"></a>
 
 ### CalibControl
-
 Message describing the calibration status
 
 
@@ -111,7 +109,7 @@ Message describing the calibration status
 | numberOfPoints | [int32](#int32) |  | Number of calibration points, currently 5 and 9 is accepted |
 | abort | [bool](#bool) |  | Indicates an aborted calibration or request an abort |
 | stopHID | [bool](#bool) |  | If connected to an iPad or tablet, this will indicate if the native cursor should move or not |
-| res | [ScreenResolution](#Skyle.ScreenResolution) |  | Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used) |
+| res | [ScreenResolution](#Skyle-ScreenResolution) |  | Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used) |
 | stepByStep | [bool](#bool) |  | Indicates a manual step by step calib (each point gets confirmed by client or button) |
 
 
@@ -119,10 +117,9 @@ Message describing the calibration status
 
 
 
-<a name="Skyle.CalibImprove"></a>
+<a name="Skyle-CalibImprove"></a>
 
 ### CalibImprove
-
 Message to improve a calibration
 
 
@@ -136,62 +133,58 @@ Message to improve a calibration
 
 
 
-<a name="Skyle.CalibMessages"></a>
+<a name="Skyle-CalibMessages"></a>
 
 ### CalibMessages
-
 Message wrapping calibration host messages
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| calibControl | [CalibControl](#Skyle.CalibControl) |  | Message describing the calibration status, gets sent on change |
-| calibPoint | [CalibPoint](#Skyle.CalibPoint) |  | Calibration point that gets sent on change |
-| calibQuality | [CalibQuality](#Skyle.CalibQuality) |  | Calibration quality, gets sent when calibration is done |
+| calibControl | [CalibControl](#Skyle-CalibControl) |  | Message describing the calibration status, gets sent on change |
+| calibPoint | [CalibPoint](#Skyle-CalibPoint) |  | Calibration point that gets sent on change |
+| calibQuality | [CalibQuality](#Skyle-CalibQuality) |  | Calibration quality, gets sent when calibration is done |
 
 
 
 
 
 
-<a name="Skyle.CalibPoint"></a>
+<a name="Skyle-CalibPoint"></a>
 
 ### CalibPoint
-
 Message describing a calibration point
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | count | [int32](#int32) |  | Number of calibration point: 0 to 8 for 9 point calibration, 0 to 4 for 5 point calibration |
-| currentPoint | [Point](#Skyle.Point) |  | 2D point with coordinates |
+| currentPoint | [Point](#Skyle-Point) |  | 2D point with coordinates |
 
 
 
 
 
 
-<a name="Skyle.CalibQuality"></a>
+<a name="Skyle-CalibQuality"></a>
 
 ### CalibQuality
-
 Message describing the quality of a calibration
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | quality | [double](#double) |  | Overall quality: 1 is worst, 5 is best |
-| qualitys | [double](#double) | repeated | List of quality per calibration point: 1 is worst, 5 is best |
+| qualities | [double](#double) | repeated | List of quality per calibration point: 1 is worst, 5 is best |
 
 
 
 
 
 
-<a name="Skyle.DeviceVersions"></a>
+<a name="Skyle-DeviceVersions"></a>
 
 ### DeviceVersions
-
 Message containing all build versions
 
 
@@ -210,10 +203,9 @@ Message containing all build versions
 
 
 
-<a name="Skyle.FilterOptions"></a>
+<a name="Skyle-FilterOptions"></a>
 
 ### FilterOptions
-
 Filter configuration message
 
 
@@ -227,87 +219,56 @@ Filter configuration message
 
 
 
-<a name="Skyle.IPadOptions"></a>
+<a name="Skyle-IPadOptions"></a>
 
 ### IPadOptions
-
 iPad Option message for configuration
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | isOldiOS | [bool](#bool) |  | Set this to true if iOS 13 to 13.3 is used, otherwise false (&gt;= 13.4) |
-| isNotZommed | [bool](#bool) |  | Set this to true if screen zoom is not enabled. It is recommended to use zoom! |
-| iPadModel | [enum](#enum) |  | Set this to the iPad model you are using. If the device isn't an iPad, this value will be ignored. |
-
-#### iPadModel is the modelname
-
-In Swift this modelname can be read with the following snippet:
-```swift
-var systemInfo = utsname()
-uname(&systemInfo)
-let modelCode = withUnsafePointer(to: &systemInfo.machine) {
-    $0.withMemoryRebound(to: CChar.self, capacity: 1) {
-        ptr in String.init(validatingUTF8: ptr)
-    }
-}
-print(modelCode)
-```
-
-	iPad8_5 = iPad Pro (12.9-inch) (3rd generation)
-	iPad8_6 = iPad Pro (12.9-inch) (3rd generation)
-	iPad8_7 = iPad Pro (12.9-inch) (3rd generation)
-	iPad8_8 = iPad Pro (12.9-inch) (3rd generation)
-	iPad8_11 = iPad Pro (12.9-inch) (4th generation)
-	iPad8_12 = iPad Pro (12.9-inch) (4th generation)
-	iPad13_1 = iPad Air (4th generation)
-	iPad13_2 = iPad Air (4th generation)
-	iPad13_8 = iPad Pro (12.9-inch) (5th generation)
-	iPad13_9 = iPad Pro (12.9-inch) (5th generation)
-	iPad13_10 = iPad Pro (12.9-inch) (5th generation)
-	iPad13_11 = iPad Pro (12.9-inch) (5th generation)
-	iPad13_16 = iPad Air (5th generation)
-	iPad13_17 = iPad Air (5th generation)
+| isNotZoomed | [bool](#bool) |  | Set this to true if screen zoom is not enabled. It is recommended to use zoom! |
+| model | [IPadOptions.iPadModel](#Skyle-IPadOptions-iPadModel) |  |  |
 
 
 
 
 
-<a name="Skyle.OptionMessage"></a>
+
+<a name="Skyle-OptionMessage"></a>
 
 ### OptionMessage
-
 Message to wrap the options message: either empty or filled with options
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| empty | [google.protobuf.Empty](#google.protobuf.Empty) |  | Empty message |
-| options | [Options](#Skyle.Options) |  | Options |
+| empty | [google.protobuf.Empty](#google-protobuf-Empty) |  | Empty message |
+| options | [Options](#Skyle-Options) |  | Options |
 
 
 
 
 
 
-<a name="Skyle.Options"></a>
+<a name="Skyle-Options"></a>
 
 ### Options
-
 Option message for configuration
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| stream | [bool](#bool) |  | Turn on an image stream @ http://skyle.local:8080 |
+| stream | [bool](#bool) |  | Turn on an image stream @ http:// skyle.local:8080 |
 | enablePause | [bool](#bool) |  | Allow pause by API or by looking into the camera for 5 seconds |
 | pause | [bool](#bool) |  | Pause the eye tracker - enablePause needs to be true |
 | guidance | [bool](#bool) |  | Deprecated: stream a positioning stream instead of an image stream (DO NOT USE) |
 | enableStandby | [bool](#bool) |  | Enable standby mode if the host (iPad) is not reachable / turned off |
 | disableMouse | [bool](#bool) |  | Disable mouse on windows or testing systems |
-| filter | [FilterOptions](#Skyle.FilterOptions) |  | Filter options for high skilled users, leave empty if skill is not high! |
-| iPadOptions | [IPadOptions](#Skyle.IPadOptions) |  | Optional iPad Pro Settings, leave empty when unused / not sending |
-| res | [ScreenResolution](#Skyle.ScreenResolution) |  | Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used) |
+| filter | [FilterOptions](#Skyle-FilterOptions) |  | Filter options for high skilled users, leave empty if skill is not high! |
+| iPadOptions | [IPadOptions](#Skyle-IPadOptions) |  | Optional iPad Pro Settings, leave empty when unused / not sending |
+| res | [ScreenResolution](#Skyle-ScreenResolution) |  | Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used) |
 | hp | [bool](#bool) |  | Reserved bool (DO NOT USE) |
 
 
@@ -315,10 +276,9 @@ Option message for configuration
 
 
 
-<a name="Skyle.Point"></a>
+<a name="Skyle-Point"></a>
 
 ### Point
-
 Message for a 2D point
 
 
@@ -332,49 +292,63 @@ Message for a 2D point
 
 
 
-<a name="Skyle.PositioningMessage"></a>
+<a name="Skyle-PositioningMessage"></a>
 
 ### PositioningMessage
-
 Message with eye positions and quality indicators
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| leftEye | [Point](#Skyle.Point) |  | 2D position of the left eye |
-| rightEye | [Point](#Skyle.Point) |  | 2D position of the right eye |
-| qualityDepth | [int32](#int32) |  | Quality indicator for depth positioning. range is -50 to &#43;50. 0 is the best, -50 to far away and 50 to close |
-| qualitySides | [int32](#int32) |  | Quality indicator for overall horizontal and vertical positioning : range is -50 to &#43;50. 0 is the best |
-| qualityXAxis | [int32](#int32) |  | Quality indicator for horizontal positioning. range is -50 to &#43;50. 0 is the best, -50 to far left and 50 to far right |
-| qualityYAxis | [int32](#int32) |  | Quality indicator for vertical positioning. range is -50 to &#43;50. 0 is the best, -50 to far down and 50 to far up |
+| leftEye | [Point](#Skyle-Point) |  | 2D position of the left eye |
+| rightEye | [Point](#Skyle-Point) |  | 2D position of the right eye |
+| distanceQuality | [int32](#int32) |  | Quality indicator for depth positioning. range is -50 to &#43;50. 0 is the best, -50 to far away and 50 to close |
+| positioningQuality | [int32](#int32) |  | Quality indicator for overall horizontal and vertical positioning : range is -50 to &#43;50. 0 is the best |
+| horizontalQuality | [int32](#int32) |  | Quality indicator for horizontal positioning. range is -50 to &#43;50. 0 is the best, -50 to far left and 50 to far right |
+| verticalQuality | [int32](#int32) |  | Quality indicator for vertical positioning. range is -50 to &#43;50. 0 is the best, -50 to far down and 50 to far up |
 
 
 
 
 
 
-<a name="Skyle.Profile"></a>
+<a name="Skyle-Profile"></a>
 
 ### Profile
-
 Message describing a user profile
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| ID | [int32](#int32) |  | Unique ID for a user (on this eye tracker) |
+| id | [int32](#int32) |  | Unique ID for a user (on this eye tracker) |
 | name | [string](#string) |  | Name or nickname for the profile |
-| skill | [Profile.Skill](#Skyle.Profile.Skill) |  | Skill of user |
+| skill | [Profile.Skill](#Skyle-Profile-Skill) |  | Skill of user |
 
 
 
 
 
 
-<a name="Skyle.ResetMessage"></a>
+<a name="Skyle-RawImage"></a>
+
+### RawImage
+Single image in grayscale raw bytes
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| width | [int32](#int32) |  | pixel width |
+| height | [int32](#int32) |  | pixel height |
+| data | [bytes](#bytes) |  | bytes of image |
+
+
+
+
+
+
+<a name="Skyle-ResetMessage"></a>
 
 ### ResetMessage
-
 Message to request resets
 
 
@@ -389,10 +363,9 @@ Message to request resets
 
 
 
-<a name="Skyle.ScreenResolution"></a>
+<a name="Skyle-ScreenResolution"></a>
 
 ### ScreenResolution
-
 Message with screen resolution of the client
 
 
@@ -400,18 +373,17 @@ Message with screen resolution of the client
 | ----- | ---- | ----- | ----------- |
 | width | [int32](#int32) |  | Width in pixel |
 | height | [int32](#int32) |  | Height in pixel |
-| widthinMM | [int32](#int32) |  | Width in mm |
-| heightinMM | [int32](#int32) |  | Height in mm |
+| widthInMM | [int32](#int32) |  | Width in mm |
+| heightInMM | [int32](#int32) |  | Height in mm |
 
 
 
 
 
 
-<a name="Skyle.StatusMessage"></a>
+<a name="Skyle-StatusMessage"></a>
 
 ### StatusMessage
-
 General status message
 
 
@@ -424,10 +396,9 @@ General status message
 
 
 
-<a name="Skyle.TriggerMessage"></a>
+<a name="Skyle-TriggerMessage"></a>
 
 ### TriggerMessage
-
 Message to indicate a trigger
 
 
@@ -443,18 +414,33 @@ Message to indicate a trigger
 
 
 
-<a name="Skyle.calibControlMessages"></a>
+<a name="Skyle-calibControlMessages"></a>
 
 ### calibControlMessages
-
 Message wrapping possible calibration control messages for a client
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| calibControl | [CalibControl](#Skyle.CalibControl) |  | Message describing the calibration status |
-| calibImprove | [CalibImprove](#Skyle.CalibImprove) |  | Message to improve a calibration |
-| calibConfirm | [CalibConfirm](#Skyle.CalibConfirm) |  | Message to confirm this point on a step by step calib |
+| calibControl | [CalibControl](#Skyle-CalibControl) |  | Message describing the calibration status |
+| calibImprove | [CalibImprove](#Skyle-CalibImprove) |  | Message to improve a calibration |
+| calibConfirm | [CalibConfirm](#Skyle-CalibConfirm) |  | Message to confirm this point on a step by step calib |
+
+
+
+
+
+
+<a name="Skyle-calibCursorMessages"></a>
+
+### calibCursorMessages
+Message wrapping possible cursor calibration messages for a client
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| empty | [google.protobuf.Empty](#google-protobuf-Empty) |  | Empty message (start) |
+| calibConfirm | [CalibConfirm](#Skyle-CalibConfirm) |  | Message to confirm the next point |
 
 
 
@@ -463,16 +449,40 @@ Message wrapping possible calibration control messages for a client
  
 
 
-<a name="Skyle.Profile.Skill"></a>
+<a name="Skyle-IPadOptions-iPadModel"></a>
+
+### IPadOptions.iPadModel
+Set this to the iPad model you are using. If the device isn&#39;t an iPad, this value will be ignored.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| iPad8_5 | 0 | iPad Pro (12.9-inch) (3rd generation) |
+| iPad8_6 | 1 | iPad Pro (12.9-inch) (3rd generation) |
+| iPad8_7 | 2 | iPad Pro (12.9-inch) (3rd generation) |
+| iPad8_8 | 3 | iPad Pro (12.9-inch) (3rd generation) |
+| iPad8_11 | 4 | iPad Pro (12.9-inch) (4th generation) |
+| iPad8_12 | 5 | iPad Pro (12.9-inch) (4th generation) |
+| iPad13_1 | 6 | iPad Air (4th generation) |
+| iPad13_2 | 7 | iPad Air (4th generation) |
+| iPad13_8 | 8 | iPad Pro (12.9-inch) (5th generation) |
+| iPad13_9 | 9 | iPad Pro (12.9-inch) (5th generation) |
+| iPad13_10 | 10 | iPad Pro (12.9-inch) (5th generation) |
+| iPad13_11 | 11 | iPad Pro (12.9-inch) (5th generation) |
+| iPad13_16 | 12 | iPad Air (5th generation) |
+| iPad13_17 | 13 | iPad Air (5th generation) |
+
+
+
+<a name="Skyle-Profile-Skill"></a>
 
 ### Profile.Skill
 
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| Low | 0 | User is unpractised and has maybe cognitive impairment. this will cause the eye tracker to filter gaze data harder (less precision) |
-| Medium | 1 | User that understands the operation. Default filtering will take place |
-| High | 2 | User that is experienced with eye tracking and wants to control the filtering himself |
+| low | 0 | User is unpractised and has maybe cognitive impairment. this will cause the eye tracker to filter gaze data harder (less precision) |
+| medium | 1 | User that understands the operation. Default filtering will take place |
+| high | 2 | User that is experienced with eye tracking and wants to control the filtering himself |
 
 
  
@@ -480,27 +490,28 @@ Message wrapping possible calibration control messages for a client
  
 
 
-<a name="Skyle.Skyle"></a>
+<a name="Skyle-Skyle"></a>
 
 ### Skyle
-
 Skyle service to use the eye tracker
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Calibrate | [calibControlMessages](#Skyle.calibControlMessages) stream | [CalibMessages](#Skyle.CalibMessages) stream | Used to calibrate for the current user. Streams in both directions with given message types. Client needs to close the stream when done |
-| Positioning | [.google.protobuf.Empty](#google.protobuf.Empty) | [PositioningMessage](#Skyle.PositioningMessage) stream | Subscribe a stream sending eye positions and quality indicators to achieve good positioning of a user. Client needs to close the stream when done |
-| Gaze | [.google.protobuf.Empty](#google.protobuf.Empty) | [Point](#Skyle.Point) stream | Subscribe a gaze stream, that sends coordinates of the current user gaze on a screen. Client needs to close the stream when done |
-| Trigger | [.google.protobuf.Empty](#google.protobuf.Empty) | [TriggerMessage](#Skyle.TriggerMessage) stream | Subscribe a trigger stream, that sends trigger messages, when a user fixates a point or clicks. Client needs to close the stream when done |
-| GetButton | [.google.protobuf.Empty](#google.protobuf.Empty) | [Button](#Skyle.Button) | Unary call to get the button status |
-| SetButton | [ButtonActions](#Skyle.ButtonActions) | [ButtonActions](#Skyle.ButtonActions) | Unary call to configure the button actions, answers with the resulting configuration |
-| Configure | [OptionMessage](#Skyle.OptionMessage) | [Options](#Skyle.Options) | Unary call to get (OptionMessage -&gt; empty) or set options (OptionMessage -&gt; Options). Answers with the resulting options. Options are saved to the current user profile |
-| GetVersions | [.google.protobuf.Empty](#google.protobuf.Empty) | [DeviceVersions](#Skyle.DeviceVersions) | Unary call to get software versions |
-| GetProfiles | [.google.protobuf.Empty](#google.protobuf.Empty) | [Profile](#Skyle.Profile) stream | Subscribe a profile stream of all available profiles. Host ends stream when all results are sent |
-| CurrentProfile | [.google.protobuf.Empty](#google.protobuf.Empty) | [Profile](#Skyle.Profile) | Unary call to get the current profile |
-| SetProfile | [Profile](#Skyle.Profile) | [StatusMessage](#Skyle.StatusMessage) | Unary call to set or create a profile. Answers with a status message (success or failure) |
-| DeleteProfile | [Profile](#Skyle.Profile) | [StatusMessage](#Skyle.StatusMessage) | Unary call to delete a profile. Answers with a status message (success or failure) |
-| Reset | [ResetMessage](#Skyle.ResetMessage) | [StatusMessage](#Skyle.StatusMessage) | Unary call to reset specific parts |
+| Calibrate | [calibControlMessages](#Skyle-calibControlMessages) stream | [CalibMessages](#Skyle-CalibMessages) stream | Used to calibrate for the current user. Streams in both directions with given message types. Client needs to close the stream when done |
+| Positioning | [.google.protobuf.Empty](#google-protobuf-Empty) | [PositioningMessage](#Skyle-PositioningMessage) stream | Subscribe a stream sending eye positions and quality indicators to achieve good positioning of a user. Client needs to close the stream when done |
+| Gaze | [.google.protobuf.Empty](#google-protobuf-Empty) | [Point](#Skyle-Point) stream | Subscribe a gaze stream, that sends coordinates of the current user gaze on a screen. Client needs to close the stream when done |
+| Trigger | [.google.protobuf.Empty](#google-protobuf-Empty) | [TriggerMessage](#Skyle-TriggerMessage) stream | Subscribe a trigger stream, that sends trigger messages, when a user fixates a point or clicks. Client needs to close the stream when done |
+| GetButton | [.google.protobuf.Empty](#google-protobuf-Empty) | [Button](#Skyle-Button) | Unary call to get the button status |
+| SetButton | [ButtonActions](#Skyle-ButtonActions) | [ButtonActions](#Skyle-ButtonActions) | Unary call to configure the button actions, answers with the resulting configuration |
+| Configure | [OptionMessage](#Skyle-OptionMessage) | [Options](#Skyle-Options) | Unary call to get (OptionMessage -&gt; empty) or set options (OptionMessage -&gt; Options). Answers with the resulting options. Options are saved to the current user profile |
+| GetVersions | [.google.protobuf.Empty](#google-protobuf-Empty) | [DeviceVersions](#Skyle-DeviceVersions) | Unary call to get software versions |
+| GetProfiles | [.google.protobuf.Empty](#google-protobuf-Empty) | [Profile](#Skyle-Profile) stream | Subscribe a profile stream of all available profiles. Host ends stream when all results are sent |
+| CurrentProfile | [.google.protobuf.Empty](#google-protobuf-Empty) | [Profile](#Skyle-Profile) | Unary call to get the current profile |
+| SetProfile | [Profile](#Skyle-Profile) | [StatusMessage](#Skyle-StatusMessage) | Unary call to set or create a profile. Answers with a status message (success or failure) |
+| DeleteProfile | [Profile](#Skyle-Profile) | [StatusMessage](#Skyle-StatusMessage) | Unary call to delete a profile. Answers with a status message (success or failure) |
+| Reset | [ResetMessage](#Skyle-ResetMessage) | [StatusMessage](#Skyle-StatusMessage) | Unary call to reset specific parts |
+| CursorCalibration | [calibCursorMessages](#Skyle-calibCursorMessages) stream | [Point](#Skyle-Point) stream | Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done |
+| RawImages | [.google.protobuf.Empty](#google-protobuf-Empty) | [RawImage](#Skyle-RawImage) stream | Subscribe a raw image stream that sends unencoded frames. Client needs to close the stream when done |
 
  
 
