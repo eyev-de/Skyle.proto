@@ -4,6 +4,7 @@
 ## Table of Contents
 
 - [Skyle.proto](#Skyle-proto)
+    - [BinocularGaze](#Skyle-BinocularGaze)
     - [Button](#Skyle-Button)
     - [ButtonActions](#Skyle-ButtonActions)
     - [CalibConfirm](#Skyle-CalibConfirm)
@@ -46,6 +47,22 @@ Full protocol that is used to interface with the Skyle eye tracker with gRPC
 (c) 2020 - 2022 eyeV GmbH, written by Mathias Anhalt
 
 https://eyev.de/
+
+
+<a name="Skyle-BinocularGaze"></a>
+
+### BinocularGaze
+Message for binocular gaze points
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| leftGaze | [Point](#Skyle-Point) |  | left gaze point |
+| rightGaze | [Point](#Skyle-Point) |  | right gaze point |
+
+
+
+
 
 
 <a name="Skyle-Button"></a>
@@ -512,6 +529,7 @@ Skyle service to use the eye tracker
 | Reset | [ResetMessage](#Skyle-ResetMessage) | [StatusMessage](#Skyle-StatusMessage) | Unary call to reset specific parts |
 | CursorCalibration | [calibCursorMessages](#Skyle-calibCursorMessages) stream | [Point](#Skyle-Point) stream | Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done |
 | RawImages | [.google.protobuf.Empty](#google-protobuf-Empty) | [RawImage](#Skyle-RawImage) stream | Subscribe a raw image stream that sends unencoded frames. Client needs to close the stream when done |
+| RawBinocularGaze | [.google.protobuf.Empty](#google-protobuf-Empty) | [BinocularGaze](#Skyle-BinocularGaze) stream | Subscribe a unfiltered binocular gaze stream, that sends coordinates of the current user gaze per eye. Client needs to close the stream when done |
 
  
 

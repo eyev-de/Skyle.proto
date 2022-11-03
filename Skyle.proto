@@ -31,6 +31,7 @@ service Skyle {
 	rpc Reset(ResetMessage) returns(StatusMessage); // Unary call to reset specific parts 
 	rpc CursorCalibration (stream calibCursorMessages) returns (stream Point); // Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done
 	rpc RawImages (google.protobuf.Empty) returns (stream RawImage); // Subscribe a raw image stream that sends unencoded frames. Client needs to close the stream when done
+	rpc RawBinocularGaze (google.protobuf.Empty) returns (stream BinocularGaze); // Subscribe a unfiltered binocular gaze stream, that sends coordinates of the current user gaze per eye. Client needs to close the stream when done
 }
 
 /**
@@ -159,6 +160,14 @@ oneof message {
 	CalibPoint calibPoint = 2; // Calibration point that gets sent on change
 	CalibQuality calibQuality = 3; // Calibration quality, gets sent when calibration is done
 }
+}
+
+/**
+* Message for binocular gaze points
+*/
+message BinocularGaze {
+	Point leftGaze = 1; // left gaze point
+	Point rightGaze = 2; // right gaze point
 }
 
 /**
