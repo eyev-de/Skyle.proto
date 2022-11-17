@@ -30,6 +30,7 @@
     - [calibCursorMessages](#Skyle-calibCursorMessages)
   
     - [IPadOptions.iPadModel](#Skyle-IPadOptions-iPadModel)
+    - [Options.eyeUse](#Skyle-Options-eyeUse)
     - [Profile.Skill](#Skyle-Profile-Skill)
   
     - [Skyle](#Skyle-Skyle)
@@ -287,6 +288,7 @@ Option message for configuration
 | iPadOptions | [IPadOptions](#Skyle-IPadOptions) |  | Optional iPad Pro Settings, leave empty when unused / not sending |
 | res | [ScreenResolution](#Skyle-ScreenResolution) |  | Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used) |
 | hp | [bool](#bool) |  | Reserved bool (DO NOT USE) |
+| eyeUsage | [Options.eyeUse](#Skyle-Options-eyeUse) |  | Select which eyes to track and to use for gaze (default: both) |
 
 
 
@@ -487,6 +489,19 @@ Set this to the iPad model you are using. If the device isn&#39;t an iPad, this 
 | iPad13_11 | 11 | iPad Pro (12.9-inch) (5th generation) |
 | iPad13_16 | 12 | iPad Air (5th generation) |
 | iPad13_17 | 13 | iPad Air (5th generation) |
+
+
+
+<a name="Skyle-Options-eyeUse"></a>
+
+### Options.eyeUse
+
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| both | 0 | Both eyes (default) |
+| left | 1 | Only left eye |
+| right | 2 | Only right eye |
 
 
 

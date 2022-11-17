@@ -220,6 +220,12 @@ message Options {
 	IPadOptions iPadOptions = 8; // Optional iPad Pro Settings, leave empty when unused / not sending
 	ScreenResolution res = 9; // Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used)
 	bool hp = 10; // Reserved bool (DO NOT USE)
+	enum eyeUse {
+		both = 0; // Both eyes (default)
+		left = 1; // Only left eye
+		right = 2; // Only right eye
+	}
+	eyeUse eyeUsage = 11; // Select which eyes to track and to use for gaze (default: both)
 }
 
 /**
