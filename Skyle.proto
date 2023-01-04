@@ -16,7 +16,7 @@ package Skyle;
 * Skyle service to use the eye tracker
 */
 service Skyle {
-	rpc Calibrate (stream calibControlMessages) returns (stream CalibMessages); // Used to calibrate for the current user. Streams in both directions with given message types. Client needs to close the stream when done
+	rpc Calibrate (stream CalibControlMessages) returns (stream CalibMessages); // Used to calibrate for the current user. Streams in both directions with given message types. Client needs to close the stream when done
 	rpc Positioning (google.protobuf.Empty) returns (stream PositioningMessage); // Subscribe a stream sending eye positions and quality indicators to achieve good positioning of a user. Client needs to close the stream when done
 	rpc Gaze (google.protobuf.Empty) returns (stream Point); // Subscribe a gaze stream, that sends coordinates of the current user gaze on a screen. Client needs to close the stream when done
 	rpc Trigger (google.protobuf.Empty) returns (stream TriggerMessage); // Subscribe a trigger stream, that sends trigger messages, when a user fixates a point or clicks. Client needs to close the stream when done
@@ -29,7 +29,7 @@ service Skyle {
 	rpc SetProfile(Profile) returns(StatusMessage); // Unary call to set or create a profile. Answers with a status message (success or failure)
 	rpc DeleteProfile(Profile) returns(StatusMessage); // Unary call to delete a profile. Answers with a status message (success or failure)
 	rpc Reset(ResetMessage) returns(StatusMessage); // Unary call to reset specific parts 
-	rpc CursorCalibration (stream calibCursorMessages) returns (stream Point); // Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done
+	rpc CursorCalibration (stream CalibCursorMessages) returns (stream Point); // Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done
 	rpc RawImages (google.protobuf.Empty) returns (stream RawImage); // Subscribe a raw image stream that sends unencoded frames. Client needs to close the stream when done
 	rpc RawBinocularGaze (google.protobuf.Empty) returns (stream BinocularGaze); // Subscribe a unfiltered binocular gaze stream, that sends coordinates of the current user gaze per eye. Client needs to close the stream when done
 }
@@ -69,9 +69,9 @@ message Profile {
 	int32 id = 1; // Unique ID for a user (on this eye tracker)
 	string name = 2; // Name or nickname for the profile
 	enum Skill {
-		low = 0; // User is unpractised and has maybe cognitive impairment. this will cause the eye tracker to filter gaze data harder (less precision)
-		medium = 1; // User that understands the operation. Default filtering will take place
-		high = 2; // User that is experienced with eye tracking and wants to control the filtering himself
+		Low = 0; // User is unpractised and has maybe cognitive impairment. this will cause the eye tracker to filter gaze data harder (less precision)
+		Medium = 1; // User that understands the operation. Default filtering will take place
+		High = 2; // User that is experienced with eye tracking and wants to control the filtering himself
 	}
 	Skill skill = 3; // Skill of user
 }
@@ -96,7 +96,7 @@ oneof message {
 /**
 * Message wrapping possible calibration control messages for a client
 */
-message calibControlMessages {
+message CalibControlMessages {
 oneof message {
 	CalibControl calibControl = 1; // Message describing the calibration status
 	CalibImprove calibImprove = 2; // Message to improve a calibration
@@ -107,7 +107,7 @@ oneof message {
 /**
 * Message wrapping possible cursor calibration messages for a client
 */
-message calibCursorMessages {
+message CalibCursorMessages {
 oneof message {
 	google.protobuf.Empty empty = 1; // Empty message (start)
 	CalibConfirm calibConfirm = 3; // Message to confirm the next point
@@ -221,9 +221,9 @@ message Options {
 	ScreenResolution res = 9; // Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used)
 	bool hp = 10; // Reserved bool (DO NOT USE)
 	enum eyeUse {
-		both = 0; // Both eyes (default)
-		left = 1; // Only left eye
-		right = 2; // Only right eye
+		Both = 0; // Both eyes (default)
+		Left = 1; // Only left eye
+		Right = 2; // Only right eye
 	}
 	eyeUse eyeUsage = 11; // Select which eyes to track and to use for gaze (default: both)
 }
@@ -235,20 +235,20 @@ message IPadOptions {
 	bool isOldiOS = 1; // Set this to true if iOS 13 to 13.3 is used, otherwise false (>= 13.4)
 	bool isNotZoomed = 2; // Set this to true if screen zoom is not enabled. It is recommended to use zoom!
 	enum iPadModel { // Set this to the iPad model you are using. If the device isn't an iPad, this value will be ignored.
-		iPad8_5 = 0; // iPad Pro (12.9-inch) (3rd generation)
-		iPad8_6 = 1; // iPad Pro (12.9-inch) (3rd generation)
-		iPad8_7 = 2; // iPad Pro (12.9-inch) (3rd generation)
-		iPad8_8 = 3; // iPad Pro (12.9-inch) (3rd generation)
-		iPad8_11 = 4; // iPad Pro (12.9-inch) (4th generation)
-		iPad8_12 = 5; // iPad Pro (12.9-inch) (4th generation)
-		iPad13_1 = 6; // iPad Air (4th generation)
-		iPad13_2 = 7; // iPad Air (4th generation)
-		iPad13_8 = 8; // iPad Pro (12.9-inch) (5th generation)
-		iPad13_9 = 9; // iPad Pro (12.9-inch) (5th generation)
-		iPad13_10 = 10; // iPad Pro (12.9-inch) (5th generation)
-		iPad13_11 = 11; // iPad Pro (12.9-inch) (5th generation)
-		iPad13_16 = 12; // iPad Air (5th generation)
-		iPad13_17 = 13; // iPad Air (5th generation)
+		IPad8_5 = 0; // iPad Pro (12.9-inch) (3rd generation)
+		IPad8_6 = 1; // iPad Pro (12.9-inch) (3rd generation)
+		IPad8_7 = 2; // iPad Pro (12.9-inch) (3rd generation)
+		IPad8_8 = 3; // iPad Pro (12.9-inch) (3rd generation)
+		IPad8_11 = 4; // iPad Pro (12.9-inch) (4th generation)
+		IPad8_12 = 5; // iPad Pro (12.9-inch) (4th generation)
+		IPad13_1 = 6; // iPad Air (4th generation)
+		IPad13_2 = 7; // iPad Air (4th generation)
+		IPad13_8 = 8; // iPad Pro (12.9-inch) (5th generation)
+		IPad13_9 = 9; // iPad Pro (12.9-inch) (5th generation)
+		IPad13_10 = 10; // iPad Pro (12.9-inch) (5th generation)
+		IPad13_11 = 11; // iPad Pro (12.9-inch) (5th generation)
+		IPad13_16 = 12; // iPad Air (5th generation)
+		IPad13_17 = 13; // iPad Air (5th generation)
 	}
 	oneof optional_model {
 		iPadModel model = 3;
