@@ -17,6 +17,7 @@ package Skyle;
 */
 service Skyle {
 	rpc Calibrate (stream CalibControlMessages) returns (stream CalibMessages); // Used to calibrate for the current user. Streams in both directions with given message types. Client needs to close the stream when done
+	rpc ControlCalibration (CalibControl) returns (StatusMessage); // Unary call to control calibration step. May be used if bidirectional streaming is not supported by the client
 	rpc Positioning (google.protobuf.Empty) returns (stream PositioningMessage); // Subscribe a stream sending eye positions and quality indicators to achieve good positioning of a user. Client needs to close the stream when done
 	rpc Gaze (google.protobuf.Empty) returns (stream Point); // Subscribe a gaze stream, that sends coordinates of the current user gaze on a screen. Client needs to close the stream when done
 	rpc Trigger (google.protobuf.Empty) returns (stream TriggerMessage); // Subscribe a trigger stream, that sends trigger messages, when a user fixates a point or clicks. Client needs to close the stream when done
@@ -30,6 +31,7 @@ service Skyle {
 	rpc DeleteProfile(Profile) returns(StatusMessage); // Unary call to delete a profile. Answers with a status message (success or failure)
 	rpc Reset(ResetMessage) returns(StatusMessage); // Unary call to reset specific parts 
 	rpc CursorCalibration (stream CalibCursorMessages) returns (stream Point); // Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done
+	rpc ConfirmCursorCalibration (CalibConfirm) returns (StatusMessage); // Unary call to control cursor calibration step. May be used if bidirectional streaming is not supported by the client
 	rpc RawImages (google.protobuf.Empty) returns (stream RawImage); // Subscribe a raw image stream that sends unencoded frames. Client needs to close the stream when done
 	rpc RawBinocularGaze (google.protobuf.Empty) returns (stream BinocularGaze); // Subscribe a unfiltered binocular gaze stream, that sends coordinates of the current user gaze per eye. Client needs to close the stream when done
 }
