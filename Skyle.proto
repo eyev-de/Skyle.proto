@@ -87,31 +87,31 @@ message StatusMessage {
 * Message to wrap the options message: either empty or filled with options
 */
 message OptionMessage {
-oneof message {
-	google.protobuf.Empty empty = 1; // Empty message
-	Options options = 2; // Options
-}
+	oneof message {
+		google.protobuf.Empty empty = 1; // Empty message
+		Options options = 2; // Options
+	}
 }
 
 /**
 * Message wrapping possible calibration control messages for a client
 */
 message CalibControlMessages {
-oneof message {
-	CalibControl calibControl = 1; // Message describing the calibration status
-	CalibImprove calibImprove = 2; // Message to improve a calibration
-	CalibConfirm calibConfirm = 3; // Message to confirm this point on a step by step calib
-}
+	oneof message {
+		CalibControl calibControl = 1; // Message describing the calibration status
+		CalibImprove calibImprove = 2; // Message to improve a calibration
+		CalibConfirm calibConfirm = 3; // Message to confirm this point on a step by step calib
+	}
 }
 
 /**
 * Message wrapping possible cursor calibration messages for a client
 */
 message CalibCursorMessages {
-oneof message {
-	google.protobuf.Empty empty = 1; // Empty message (start)
-	CalibConfirm calibConfirm = 3; // Message to confirm the next point
-}
+	oneof message {
+		google.protobuf.Empty empty = 1; // Empty message (start)
+		CalibConfirm calibConfirm = 3; // Message to confirm the next point
+	}
 }
 
 /**
@@ -155,11 +155,11 @@ message CalibConfirm {
 * Message wrapping calibration host messages
 */
 message CalibMessages {
-oneof message {
-	CalibControl calibControl = 1; // Message describing the calibration status, gets sent on change
-	CalibPoint calibPoint = 2; // Calibration point that gets sent on change
-	CalibQuality calibQuality = 3; // Calibration quality, gets sent when calibration is done
-}
+	oneof message {
+		CalibControl calibControl = 1; // Message describing the calibration status, gets sent on change
+		CalibPoint calibPoint = 2; // Calibration point that gets sent on change
+		CalibQuality calibQuality = 3; // Calibration quality, gets sent when calibration is done
+	}
 }
 
 /**
