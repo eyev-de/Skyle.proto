@@ -28,7 +28,7 @@ service Skyle {
 	rpc CurrentProfile(google.protobuf.Empty) returns(Profile); // Unary call to get the current profile
 	rpc SetProfile(Profile) returns(StatusMessage); // Unary call to set or create a profile. Answers with a status message (success or failure)
 	rpc DeleteProfile(Profile) returns(StatusMessage); // Unary call to delete a profile. Answers with a status message (success or failure)
-	rpc Reset(ResetMessage) returns(StatusMessage); // Unary call to reset specific parts 
+	rpc Reset(ResetMessage) returns(StatusMessage); // Unary call to reset specific parts
 	rpc CursorCalibration (stream CalibCursorMessages) returns (stream Point); // Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done
 	rpc RawImages (google.protobuf.Empty) returns (stream RawImage); // Subscribe a raw image stream that sends unencoded frames. Client needs to close the stream when done
 	rpc RawBinocularGaze (google.protobuf.Empty) returns (stream BinocularGaze); // Subscribe a unfiltered binocular gaze stream, that sends coordinates of the current user gaze per eye. Client needs to close the stream when done
@@ -38,8 +38,8 @@ service Skyle {
 * Single image in grayscale raw bytes
 */
 message RawImage {
-    int32 width = 1; // pixel width
-    int32 height = 2; // pixel height
+	int32 width = 1; // pixel width
+	int32 height = 2; // pixel height
 	bytes data = 3; // bytes of image
 }
 
@@ -234,21 +234,66 @@ message Options {
 message IPadOptions {
 	bool isOldiOS = 1; // Set this to true if iOS 13 to 13.3 is used, otherwise false (>= 13.4)
 	bool isNotZoomed = 2; // Set this to true if screen zoom is not enabled. It is recommended to use zoom!
-	enum iPadModel { // Set this to the iPad model you are using. If the device isn't an iPad, this value will be ignored.
-		IPad8_5 = 0; // iPad Pro (12.9-inch) (3rd generation)
-		IPad8_6 = 1; // iPad Pro (12.9-inch) (3rd generation)
-		IPad8_7 = 2; // iPad Pro (12.9-inch) (3rd generation)
-		IPad8_8 = 3; // iPad Pro (12.9-inch) (3rd generation)
-		IPad8_11 = 4; // iPad Pro (12.9-inch) (4th generation)
-		IPad8_12 = 5; // iPad Pro (12.9-inch) (4th generation)
-		IPad13_1 = 6; // iPad Air (4th generation)
-		IPad13_2 = 7; // iPad Air (4th generation)
-		IPad13_8 = 8; // iPad Pro (12.9-inch) (5th generation)
-		IPad13_9 = 9; // iPad Pro (12.9-inch) (5th generation)
-		IPad13_10 = 10; // iPad Pro (12.9-inch) (5th generation)
-		IPad13_11 = 11; // iPad Pro (12.9-inch) (5th generation)
-		IPad13_16 = 12; // iPad Air (5th generation)
-		IPad13_17 = 13; // iPad Air (5th generation)
+	// Set this to the iPad model you are using. If the device isn't an iPad, this value will be ignored.
+	enum iPadModel {
+		/// 2018
+		// iPad Pro (12.9-inch) (3rd generation)
+		iPad8_8 = 0;
+		iPad8_7 = 1;
+		iPad8_6 = 2;
+		iPad8_5 = 3;
+		// iPad Pro (11-inch) (1st generation)
+		iPad8_4 = 4;
+		iPad8_3 = 5;
+		iPad8_2 = 6;
+		iPad8_1 = 7;
+		/// 2020
+		// iPad Air (4th generation)
+		iPad13_2 = 8;
+		iPad13_1 = 9;
+		// iPad Pro (12.9-inch) (4th generation)
+		iPad8_12 = 10;
+		iPad8_11 = 11;
+		// iPad Pro (11-inch) (2nd generation)
+		iPad8_10 = 12;
+		iPad8_9 = 13;
+		/// 2021
+		// iPad mini (6th generation)
+		iPad14_2 = 14;
+		iPad14_1 = 15;
+		// iPad Pro (12.9-inch) (5th generation)
+		iPad13_11 = 16;
+		iPad13_10 = 17;
+		iPad13_9 = 18;
+		iPad13_8 = 19;
+		// iPad Pro (11-inch) (3rd generation)
+		iPad13_7 = 20;
+		iPad13_6 = 21;
+		iPad13_5 = 22;
+		iPad13_4 = 23;
+		/// 2022
+		// iPad Air (5th generation)
+		iPad13_17 = 24;
+		iPad13_16 = 25;
+		// iPad Pro (12.9-inch) (6th generation)
+		iPad14_6 = 26;
+		iPad14_5 = 27;
+		// iPad Pro (11-inch) (4th generation)
+		iPad14_4 = 28;
+		iPad14_3 = 29;
+		/// 2024
+		// iPad Air (13-inch) (M2)
+		iPad14_11 = 30;
+		iPad14_10 = 31;
+		// iPad Air (11-inch) (M2)
+		iPad14_9 = 32;
+		iPad14_8 = 33;
+		// iPad Pro (13-inch) (M4)
+		iPad16_6 = 34;
+		iPad16_5 = 35;
+		// iPad Pro (11-inch) (M4)
+		iPad16_4 = 36;
+		iPad16_3 = 37;
 	}
 	oneof optional_model {
 		iPadModel model = 3;
