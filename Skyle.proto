@@ -263,43 +263,43 @@ message IPadOptions {
 		/// ADDITIONAL DEVICES
 		/// 2018
 		// iPad Pro (11-inch) (1st generation)
-		IPad8_1 = 15;
-		IPad8_2 = 16;
-		IPad8_3 = 17;
-		IPad8_4 = 18;
+		IPad8_1 = 14;
+		IPad8_2 = 15;
+		IPad8_3 = 16;
+		IPad8_4 = 17;
 		/// 2020
 		// iPad Pro (11-inch) (2nd generation)
-		IPad8_9 = 19;
-		IPad8_10 = 20;
+		IPad8_9 = 18;
+		IPad8_10 = 19;
 		/// 2021
-		// iPad mini (6th generation)
-		IPad14_1 = 21;
-		IPad14_2 = 22;
 		// iPad Pro (11-inch) (3rd generation)
-		IPad13_4 = 23;
-		IPad13_5 = 24;
-		IPad13_6 = 25;
-		IPad13_7 = 26;
+		IPad13_4 = 20;
+		IPad13_5 = 21;
+		IPad13_6 = 22;
+		IPad13_7 = 23;
+		// iPad mini (6th generation)
+		IPad14_1 = 24;
+		IPad14_2 = 25;
 		/// 2022
-		// iPad Pro (12.9-inch) (6th generation)
-		IPad14_5 = 27;
-		IPad14_6 = 28;
 		// iPad Pro (11-inch) (4th generation)
-		IPad14_3 = 29;
-		IPad14_4 = 30;
+		IPad14_3 = 26;
+		IPad14_4 = 27;
+		// iPad Pro (12.9-inch) (6th generation)
+		IPad14_5 = 28;
+		IPad14_6 = 29;
 		/// 2024
-		// iPad Air (13-inch) (M2)
-		IPad14_10 = 31;
-		IPad14_11 = 32;
 		// iPad Air (11-inch) (M2)
-		IPad14_8 = 33;
-		IPad14_9 = 34;
-		// iPad Pro (13-inch) (M4)
-		IPad16_5 = 35;
-		IPad16_6 = 36;
+		IPad14_8 = 30;
+		IPad14_9 = 31;
+		// iPad Air (13-inch) (M2)
+		IPad14_10 = 32;
+		IPad14_11 = 33;
 		// iPad Pro (11-inch) (M4)
-		IPad16_3 = 37;
-		IPad16_4 = 38;
+		IPad16_3 = 34;
+		IPad16_4 = 35;
+		// iPad Pro (13-inch) (M4)
+		IPad16_5 = 36;
+		IPad16_6 = 37;
 	}
 	oneof optional_model {
 		iPadModel model = 3;
