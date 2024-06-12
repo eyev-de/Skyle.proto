@@ -28,7 +28,7 @@ service Skyle {
 	rpc CurrentProfile(google.protobuf.Empty) returns(Profile); // Unary call to get the current profile
 	rpc SetProfile(Profile) returns(StatusMessage); // Unary call to set or create a profile. Answers with a status message (success or failure)
 	rpc DeleteProfile(Profile) returns(StatusMessage); // Unary call to delete a profile. Answers with a status message (success or failure)
-	rpc Reset(ResetMessage) returns(StatusMessage); // Unary call to reset specific parts 
+	rpc Reset(ResetMessage) returns(StatusMessage); // Unary call to reset specific parts
 	rpc CursorCalibration (stream CalibCursorMessages) returns (stream Point); // Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done
 	rpc RawImages (google.protobuf.Empty) returns (stream RawImage); // Subscribe a raw image stream that sends unencoded frames. Client needs to close the stream when done
 	rpc RawBinocularGaze (google.protobuf.Empty) returns (stream BinocularGaze); // Subscribe a unfiltered binocular gaze stream, that sends coordinates of the current user gaze per eye. Client needs to close the stream when done
@@ -38,8 +38,8 @@ service Skyle {
 * Single image in grayscale raw bytes
 */
 message RawImage {
-    int32 width = 1; // pixel width
-    int32 height = 2; // pixel height
+	int32 width = 1; // pixel width
+	int32 height = 2; // pixel height
 	bytes data = 3; // bytes of image
 }
 
@@ -234,21 +234,72 @@ message Options {
 message IPadOptions {
 	bool isOldiOS = 1; // Set this to true if iOS 13 to 13.3 is used, otherwise false (>= 13.4)
 	bool isNotZoomed = 2; // Set this to true if screen zoom is not enabled. It is recommended to use zoom!
-	enum iPadModel { // Set this to the iPad model you are using. If the device isn't an iPad, this value will be ignored.
-		IPad8_5 = 0; // iPad Pro (12.9-inch) (3rd generation)
-		IPad8_6 = 1; // iPad Pro (12.9-inch) (3rd generation)
-		IPad8_7 = 2; // iPad Pro (12.9-inch) (3rd generation)
-		IPad8_8 = 3; // iPad Pro (12.9-inch) (3rd generation)
-		IPad8_11 = 4; // iPad Pro (12.9-inch) (4th generation)
-		IPad8_12 = 5; // iPad Pro (12.9-inch) (4th generation)
-		IPad13_1 = 6; // iPad Air (4th generation)
-		IPad13_2 = 7; // iPad Air (4th generation)
-		IPad13_8 = 8; // iPad Pro (12.9-inch) (5th generation)
-		IPad13_9 = 9; // iPad Pro (12.9-inch) (5th generation)
-		IPad13_10 = 10; // iPad Pro (12.9-inch) (5th generation)
-		IPad13_11 = 11; // iPad Pro (12.9-inch) (5th generation)
-		IPad13_16 = 12; // iPad Air (5th generation)
-		IPad13_17 = 13; // iPad Air (5th generation)
+	// Set this to the iPad model you are using. If the device isn't an iPad, this value will be ignored.
+	enum iPadModel {
+		/// 2018
+		// iPad Pro (12.9-inch) (3rd generation)
+		IPad8_5 = 0;
+		IPad8_6 = 1;
+		IPad8_7 = 2;
+		IPad8_8 = 3;
+		/// 2020
+		// iPad Pro (12.9-inch) (4th generation)
+		IPad8_11 = 4;
+		IPad8_12 = 5;
+		// iPad Air (4th generation)
+		IPad13_1 = 6;
+		IPad13_2 = 7;
+		/// 2021
+		// iPad Pro (12.9-inch) (5th generation)
+		IPad13_8 = 8;
+		IPad13_9 = 9;
+		IPad13_10 = 10;
+		IPad13_11 = 11;
+		/// 2022
+		// iPad Air (5th generation)
+		IPad13_16 = 12;
+		IPad13_17 = 13;
+
+		/// ADDITIONAL DEVICES
+		/// 2018
+		// iPad Pro (11-inch) (1st generation)
+		IPad8_1 = 14;
+		IPad8_2 = 15;
+		IPad8_3 = 16;
+		IPad8_4 = 17;
+		/// 2020
+		// iPad Pro (11-inch) (2nd generation)
+		IPad8_9 = 18;
+		IPad8_10 = 19;
+		/// 2021
+		// iPad Pro (11-inch) (3rd generation)
+		IPad13_4 = 20;
+		IPad13_5 = 21;
+		IPad13_6 = 22;
+		IPad13_7 = 23;
+		// iPad mini (6th generation)
+		IPad14_1 = 24;
+		IPad14_2 = 25;
+		/// 2022
+		// iPad Pro (11-inch) (4th generation)
+		IPad14_3 = 26;
+		IPad14_4 = 27;
+		// iPad Pro (12.9-inch) (6th generation)
+		IPad14_5 = 28;
+		IPad14_6 = 29;
+		/// 2024
+		// iPad Air (11-inch) (M2)
+		IPad14_8 = 30;
+		IPad14_9 = 31;
+		// iPad Air (13-inch) (M2)
+		IPad14_10 = 32;
+		IPad14_11 = 33;
+		// iPad Pro (11-inch) (M4)
+		IPad16_3 = 34;
+		IPad16_4 = 35;
+		// iPad Pro (13-inch) (M4)
+		IPad16_5 = 36;
+		IPad16_6 = 37;
 	}
 	oneof optional_model {
 		iPadModel model = 3;
