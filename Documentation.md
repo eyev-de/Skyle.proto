@@ -45,7 +45,7 @@
 ## Skyle.proto
 Full protocol that is used to interface with the Skyle eye tracker with gRPC
 
-(c) 2020 - 2022 eyeV GmbH, written by Mathias Anhalt
+(c) 2020 eyeV GmbH
 
 https://eyev.de/
 

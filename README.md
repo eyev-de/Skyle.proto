@@ -30,7 +30,7 @@ Please see the full [documentation here](Documentation.md).
 
 ## Meta
 
-(c) 2020 - 2022 eyeV GmbH, written by Mathias Anhalt
+(c) 2020 eyeV GmbH
 
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
