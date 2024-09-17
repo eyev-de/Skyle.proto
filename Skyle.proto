@@ -20,15 +20,16 @@ service Skyle {
 	rpc Positioning (google.protobuf.Empty) returns (stream PositioningMessage); // Subscribe a stream sending eye positions and quality indicators to achieve good positioning of a user. Client needs to close the stream when done
 	rpc Gaze (google.protobuf.Empty) returns (stream Point); // Subscribe a gaze stream, that sends coordinates of the current user gaze on a screen. Client needs to close the stream when done
 	rpc Trigger (google.protobuf.Empty) returns (stream TriggerMessage); // Subscribe a trigger stream, that sends trigger messages, when a user fixates a point or clicks. Client needs to close the stream when done
-	rpc GetButton(google.protobuf.Empty) returns(Button); // Unary call to get the button status
-	rpc SetButton(ButtonActions) returns(ButtonActions); // Unary call to configure the button actions, answers with the resulting configuration
-	rpc Configure(OptionMessage) returns (Options); // Unary call to get (OptionMessage -> empty) or set options (OptionMessage -> Options). Answers with the resulting options. Options are saved to the current user profile
-	rpc GetVersions(google.protobuf.Empty) returns(DeviceVersions); // Unary call to get software versions
-	rpc GetProfiles(google.protobuf.Empty) returns (stream Profile); // Subscribe a profile stream of all available profiles. Host ends stream when all results are sent
-	rpc CurrentProfile(google.protobuf.Empty) returns(Profile); // Unary call to get the current profile
-	rpc SetProfile(Profile) returns(StatusMessage); // Unary call to set or create a profile. Answers with a status message (success or failure)
-	rpc DeleteProfile(Profile) returns(StatusMessage); // Unary call to delete a profile. Answers with a status message (success or failure)
-	rpc Reset(ResetMessage) returns(StatusMessage); // Unary call to reset specific parts
+	rpc GetButton (google.protobuf.Empty) returns (Button); // Unary call to get the button status
+	rpc SetButton (ButtonActions) returns (ButtonActions); // Unary call to configure the button actions, answers with the resulting configuration
+	rpc Configure (OptionMessage) returns (Options); // Unary call to get (OptionMessage -> empty) or set options (OptionMessage -> Options). Answers with the resulting options. Options are saved to the current user profile
+	rpc ConfigureStream (stream OptionMessage) returns (stream Options); //
+	rpc GetVersions (google.protobuf.Empty) returns (DeviceVersions); // Unary call to get software versions
+	rpc GetProfiles (google.protobuf.Empty) returns (stream Profile); // Subscribe a profile stream of all available profiles. Host ends stream when all results are sent
+	rpc CurrentProfile (google.protobuf.Empty) returns (Profile); // Unary call to get the current profile
+	rpc SetProfile (Profile) returns (StatusMessage); // Unary call to set or create a profile. Answers with a status message (success or failure)
+	rpc DeleteProfile (Profile) returns (StatusMessage); // Unary call to delete a profile. Answers with a status message (success or failure)
+	rpc Reset (ResetMessage) returns (StatusMessage); // Unary call to reset specific parts
 	rpc CursorCalibration (stream CalibCursorMessages) returns (stream Point); // Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done
 	rpc RawImages (google.protobuf.Empty) returns (stream RawImage); // Subscribe a raw image stream that sends unencoded frames. Client needs to close the stream when done
 	rpc RawBinocularGaze (google.protobuf.Empty) returns (stream BinocularGaze); // Subscribe a unfiltered binocular gaze stream, that sends coordinates of the current user gaze per eye. Client needs to close the stream when done
@@ -119,11 +120,27 @@ message CalibCursorMessages {
 */
 message CalibControl {
 	bool calibrate = 1; // Indicates a running calibration or requests a calibration
-	int32 numberOfPoints = 2; // Number of calibration points, currently 5 and 9 is accepted
+	int32 numberOfPoints = 2; // Number of calibration points, currently 1, 2, 5 and 9 is accepted
 	bool abort = 3; // Indicates an aborted calibration or request an abort
 	bool stopHID = 4; // If connected to an iPad or tablet, this will indicate if the native cursor should move or not
 	ScreenResolution res = 5; // Screen resolution of the client: set this to the native client resolution (if unset, internal resolutions will be used)
-	bool stepByStep = 6; // Indicates a manual step by step calib (each point gets confirmed by client or button)
+	bool stepByStep = 6; // Indicates a manual step by step calibration (each point gets confirmed by client or button)
+
+	// Indices of calibration points the user wants for a 9 point or 5 point calibration
+	// The length of calibrationPoints needs to match numberOfPoints
+	// Grid on the monitor:
+	// —————————————————————————
+	// |   0   |   1   |   2   |
+	// |   3   |   4   |   5   |
+	// |   6   |   7   |   8   |
+	// —————————————————————————
+	// examples:
+	// 9 points: [0, 1, 2, 3, 4, 5, 6, 7, 8] (default for 9 points if not supplied)
+	// 9 points: [0, 2, 7, 1, 8, 3, 5, 6, 4]
+	// 5 points: [0, 2, 4, 6, 8] (default for 5 points if not supplied)
+	// 5 points: [0, 2, 6, 8, 4]
+	// 5 points: [0, 8, 2, 6, 4]
+	repeated int32 calibrationPoints = 7;
 }
 
 /**
