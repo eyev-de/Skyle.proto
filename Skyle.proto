@@ -227,11 +227,11 @@ message PositioningMessage {
 * Option message for configuration
 */
 message Options {
-	bool stream = 1; // Turn on an image stream @ http:// skyle.local:8080
-	bool enablePause = 2; // Allow pause by API or by looking into the camera for 5 seconds
-	bool pause = 3; // Pause the eye tracker - enablePause needs to be true
-	bool guidance = 4; // Deprecated: stream a positioning stream instead of an image stream (DO NOT USE)
-	bool enableStandby = 5; // Enable standby mode if the host (iPad) is not reachable / turned off
+	bool enableVideoStream = 1; // Turn on an image stream @ http:// skyle.local:8080
+	bool enableAutoPause = 2; // Allow pause by API or by looking into the camera for 5 seconds
+	bool enablePause = 3; // Pause the eye tracker - enablePause needs to be true
+	bool enablePositioningStream = 4; // Deprecated: stream a positioning stream instead of an image stream (DO NOT USE)
+	bool enableAutoStandby = 5; // Enable standby mode if the host (iPad) is not reachable / turned off
 	bool disableMouse = 6; // Disable mouse on windows or testing systems
 	FilterOptions filter = 7; // Filter options for high skilled users, leave empty if skill is not high!
 	IPadOptions iPadOptions = 8; // Optional iPad Pro Settings, leave empty when unused / not sending
@@ -243,6 +243,7 @@ message Options {
 		Right = 2; // Only right eye
 	}
 	eyeUse eyeUsage = 11; // Select which eyes to track and to use for gaze (default: both)
+	bool enableTrackingDetails = 12;
 }
 
 /**
