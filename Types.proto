@@ -1,0 +1,72 @@
+syntax = "proto3";
+option csharp_namespace = "Skyle_Server";
+
+package Skyle.Types;
+
+/**
+* Message for a 2D point
+*/
+message Point {
+	double x = 1;
+	double y = 2;
+}
+
+/**
+* Message for a size
+*/
+message Size {	
+	double width = 1;
+	double height = 2;
+}
+
+/**
+* Message for a rectangle
+*/
+message Rectangle {
+	Point topLeft = 1;
+	Size size = 2;
+}
+
+/**
+* Message for a feature
+*/
+message Feature {
+	Point center = 1; // Center of the feature
+}
+
+/**
+* Left and right glint
+*/
+message Glints {
+	Feature left = 1; // Left glint
+	Feature right = 2; // Right glint
+}
+
+/**
+* Message for an eye
+*/
+message Eye {
+	Point keyPoint = 1; // Roughly estimated key point of the eye
+	Feature iris = 2;
+	Feature pupil = 3;
+	Glints glints = 4;
+	double distance = 5; // Estimated distance to the camera in mm
+}
+
+/**
+* Message for a pair of eyes
+*/
+message Eyes {
+	Eye left = 1;
+	Eye right = 2;
+}
+
+/**
+* Message for a face
+* Rectangle bounding box of the face
+* Eyes containing several features of the eyes
+*/
+message Face {
+	Rectangle boundingRect = 1; // Bounding box of the face
+	Eyes eyes = 2; // Eyes
+}

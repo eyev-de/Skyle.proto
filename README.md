@@ -1,4 +1,4 @@
-![](SkyleEyeNew.png)
+![](assets/SkyleEyeNew.png)
 # Skyle.proto
 
 
@@ -9,11 +9,11 @@ Using this protocol, you can communicate with a Skyle eye tracker. Skyle is an e
 #### Supported devices
 | Skyle (first generation) | Skyle (second generation) |
 | ---------- | ---- |
-| ![](Skyle.jpg) | ![](Skyle2.jpg) |
+| ![](assets/Skyle.jpg) | ![](assets/Skyle2.jpg) |
 
 | Skyle (third generation) |
 | ---------- |
-| ![](Skyle3.png) |
+| ![](assets/Skyle3.png) |
 
 ## Connection
 
@@ -27,7 +27,7 @@ If you use our Skyle Integration Kit (SIK) connect to port 50051 (**skyle.local:
 If you want to try this with your eye tracker without writing code, it is recommended to use the Skyle.proto file with [BloomRPC](https://github.com/uw-labs/bloomrpc).
 It is an open-source GUI Client for gRPC services, that instantly works with the provided proto file:
 
-![](simpleTest.gif)
+![](assets/simpleTest.gif)
 
 _For detailed usage, please refer to the [Wiki](https://github.com/eyev-de/Skyle.proto/wiki)._
 

@@ -8,6 +8,7 @@
 syntax = "proto3";
 option csharp_namespace = "Skyle_Server";
 
+import "Types.proto";
 import "google/protobuf/empty.proto";
 
 package Skyle;
@@ -18,7 +19,7 @@ package Skyle;
 service Skyle {
 	rpc Calibrate (stream CalibControlMessages) returns (stream CalibMessages); // Used to calibrate for the current user. Streams in both directions with given message types. Client needs to close the stream when done
 	rpc Positioning (google.protobuf.Empty) returns (stream PositioningMessage); // Subscribe a stream sending eye positions and quality indicators to achieve good positioning of a user. Client needs to close the stream when done
-	rpc Gaze (google.protobuf.Empty) returns (stream Point); // Subscribe a gaze stream, that sends coordinates of the current user gaze on a screen. Client needs to close the stream when done
+	rpc Gaze (google.protobuf.Empty) returns (stream Types.Point); // Subscribe a gaze stream, that sends coordinates of the current user gaze on a screen. Client needs to close the stream when done
 	rpc Trigger (google.protobuf.Empty) returns (stream TriggerMessage); // Subscribe a trigger stream, that sends trigger messages, when a user fixates a point or clicks. Client needs to close the stream when done
 	rpc GetButton (google.protobuf.Empty) returns (Button); // Unary call to get the button status
 	rpc SetButton (ButtonActions) returns (ButtonActions); // Unary call to configure the button actions, answers with the resulting configuration
@@ -30,7 +31,7 @@ service Skyle {
 	rpc SetProfile (Profile) returns (StatusMessage); // Unary call to set or create a profile. Answers with a status message (success or failure)
 	rpc DeleteProfile (Profile) returns (StatusMessage); // Unary call to delete a profile. Answers with a status message (success or failure)
 	rpc Reset (ResetMessage) returns (StatusMessage); // Unary call to reset specific parts
-	rpc CursorCalibration (stream CalibCursorMessages) returns (stream Point); // Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done
+	rpc CursorCalibration (stream CalibCursorMessages) returns (stream Types.Point); // Used to calibrate / test cursor. Streams in both directions with given message types. Client needs to close the stream when done
 	rpc RawImages (google.protobuf.Empty) returns (stream RawImage); // Subscribe a raw image stream that sends unencoded frames. Client needs to close the stream when done
 	rpc RawBinocularGaze (google.protobuf.Empty) returns (stream BinocularGaze); // Subscribe a unfiltered binocular gaze stream, that sends coordinates of the current user gaze per eye. Client needs to close the stream when done
 }
@@ -183,16 +184,8 @@ message CalibMessages {
 * Message for binocular gaze points
 */
 message BinocularGaze {
-	Point leftGaze = 1; // left gaze point
-	Point rightGaze = 2; // right gaze point
-}
-
-/**
-* Message for a 2D point
-*/
-message Point {
-	double x = 1; // Precise X value
-	double y = 2; // Precise Y value
+	Types.Point leftGaze = 1; // left gaze point
+	Types.Point rightGaze = 2; // right gaze point
 }
 
 /**
@@ -200,7 +193,7 @@ message Point {
 */
 message CalibPoint {
 	int32 count = 1; // Number of calibration point: 0 to 8 for 9 point calibration, 0 to 4 for 5 point calibration
-	Point currentPoint = 2; // 2D point with coordinates
+	Types.Point currentPoint = 2; // 2D point with coordinates
 }
 
 /**
@@ -215,12 +208,13 @@ message CalibQuality {
 * Message with eye positions and quality indicators
 */
 message PositioningMessage {
-	Point leftEye = 1; // 2D position of the left eye
-	Point rightEye = 2; // 2D position of the right eye
+	Types.Point leftEye = 1; // 2D position of the left eye
+	Types.Point rightEye = 2; // 2D position of the right eye
 	int32 distanceQuality = 3; // Quality indicator for depth positioning. range is -50 to +50. 0 is the best, -50 to far away and 50 to close
 	int32 positioningQuality = 4; // Quality indicator for overall horizontal and vertical positioning : range is -50 to +50. 0 is the best
 	int32 horizontalQuality = 5; // Quality indicator for horizontal positioning. range is -50 to +50. 0 is the best, -50 to far left and 50 to far right
 	int32 verticalQuality = 6; // Quality indicator for vertical positioning. range is -50 to +50. 0 is the best, -50 to far down and 50 to far up
+	optional Types.Face face = 7; // Face data only valid for Skyle 3
 }
 
 /**
