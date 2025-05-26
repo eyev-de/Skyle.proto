@@ -28,10 +28,22 @@ message Rectangle {
 }
 
 /**
+* Message for a rotated rectangle
+* This rectangle is defined by its center, size, and angle
+* The angle is in degrees, counter-clockwise from the x-axis
+*/
+message RotatedRectangle {
+	Point center = 1;
+	Size size = 2;
+	double angle = 3;
+}
+
+/**
 * Message for a feature
 */
 message Feature {
 	Point center = 1; // Center of the feature
+	RotatedRectangle ellipse = 2; // Ellipse of the feature
 }
 
 /**
@@ -51,6 +63,7 @@ message Eye {
 	Feature pupil = 3;
 	Glints glints = 4;
 	double distance = 5; // Estimated distance to the camera in mm
+	Rectangle boundingRect = 6; // Bounding box of the eye
 }
 
 /**
@@ -69,4 +82,13 @@ message Eyes {
 message Face {
 	Rectangle boundingRect = 1; // Bounding box of the face
 	Eyes eyes = 2; // Eyes
+}
+
+/**
+* Single image in grayscale raw bytes
+*/
+message RawImage {
+	int32 width = 1; // pixel width
+	int32 height = 2; // pixel height
+	bytes data = 3; // bytes of image
 }
