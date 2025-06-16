@@ -55,6 +55,14 @@ message Glints {
 }
 
 /**
+ * Message for a gaze
+ */
+message Gaze {
+  Point raw = 1;      // Raw gaze point
+  Point smoothed = 2; // Smoothed gaze point
+}
+
+/**
  * Message for an eye
  */
 message Eye {
@@ -64,7 +72,7 @@ message Eye {
   Glints glints = 4;          // Glints in the eye
   double distance = 5;        // Estimated distance to the camera in mm
   Rectangle boundingRect = 6; // Bounding box of the eye
-  Point gaze = 7; // Estimated gaze point of that data set
+  Gaze gaze = 7;              // Estimated gaze point of that data set
 }
 
 /**
