@@ -303,6 +303,22 @@ message IPadOptions {
 		// iPad Pro (13-inch) (M4)
 		IPad16_5 = 36;
 		IPad16_6 = 37;
+		// iPad mini (A17 Pro)
+		IPad16_1 = 38;
+		IPad16_2 = 39;
+		/// 2025
+		// iPad Pro 13-inch (M5)
+		IPad17_3 = 40;
+		IPad17_4 = 41;
+		// iPad Pro 11-inch (M5)
+		IPad17_1 = 42;
+		IPad17_2 = 43;
+		// iPad Air 13-inch (M3)
+		IPad15_5 = 44;
+		IPad15_6 = 45;
+		// iPad Air 11-inch (M3)
+		IPad15_3 = 46;
+		IPad15_4 = 47;
 	}
 	oneof optional_model {
 		iPadModel model = 3;
