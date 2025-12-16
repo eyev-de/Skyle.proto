@@ -83,6 +83,15 @@ message Eyes {
   Eye right = 2; // Right eye
 }
 
+/*
+ * Message for the head pose
+ */
+message HeadPose {
+  double pitch = 1;
+  double yaw = 2;
+  double roll = 3;
+}
+
 /**
  * Message for a face
  * Rectangle bounding box of the face
@@ -92,6 +101,7 @@ message Face {
   Rectangle boundingRect = 1; // Bounding box of the face
   Eyes eyes = 2;              // Eyes
   bytes id = 3;               // Unique identifier for the face
+  HeadPose headPose = 4;
 }
 
 /**
