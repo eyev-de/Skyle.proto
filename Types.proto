@@ -90,6 +90,7 @@ message HeadPose {
   double pitch = 1;
   double yaw = 2;
   double roll = 3;
+  double confidence = 4; // Detection confidence score (0.0 - 1.0)
 }
 
 /**
