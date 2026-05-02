@@ -102,6 +102,7 @@ message Face {
   Eyes eyes = 2;              // Eyes
   bytes id = 3;               // Unique identifier for the face
   HeadPose headPose = 4;
+  double confidence = 5; // not used
 }
 
 /**
