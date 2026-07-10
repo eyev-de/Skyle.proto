@@ -168,6 +168,7 @@ message CalibMessages {
 		CalibControl calibControl = 1; // Message describing the calibration status, gets sent on change
 		CalibPoint calibPoint = 2; // Calibration point that gets sent on change
 		CalibQuality calibQuality = 3; // Calibration quality, gets sent when calibration is done
+		CalibCollecting calibCollecting = 4; // Collection progress for the current point, sent while samples are gathered
 	}
 }
 
@@ -185,6 +186,11 @@ message BinocularGaze {
 message CalibPoint {
 	int32 count = 1; // Number of calibration point: 0 to 8 for 9 point calibration, 0 to 4 for 5 point calibration
 	Types.Point currentPoint = 2; // 2D point with coordinates
+}
+
+message CalibCollecting {
+	int32 count = 1; // Number of the calibration point being collected
+	int32 progress = 2; // Collection progress: 0 to 255
 }
 
 /**
